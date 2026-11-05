@@ -324,6 +324,113 @@
         "bright_white": "#F6F1EA",
         "dim_white": "#9C9287"
       }
+    },
+    "terang": {
+      "name": "Cukup Terang",
+      "variant": "light",
+      "description": "Warm Parchment, Terracotta & Deep Celadon — High-contrast tactile paper aesthetic",
+      "surface": {
+        "canvas": "#FAF8F5",
+        "canvasBlurred": "#FAF8F5b0",
+        "panel": "#F2EFE9",
+        "panelOverlay": "#F2EFE9",
+        "panelOverlayBlurred": "#FAF8F5e8",
+        "elevated": "#FFFFFF",
+        "surface": "#F7F5F0",
+        "toolbar": "#F0ECE5",
+        "tabBar": "#EAE6DF",
+        "tabActive": "#FAF8F5",
+        "tabInactive": "#EAE6DF",
+        "activeLine": "#0000000a"
+      },
+      "border": {
+        "subtle": "#EBE7DF",
+        "default": "#E0DDD5",
+        "focused": "#D96B27",
+        "selected": "#D96B27",
+        "transparent": "#00000000"
+      },
+      "text": {
+        "primary": "#2C2825",
+        "secondary": "#5A524A",
+        "muted": "#8A8278",
+        "placeholder": "#8A8278aa",
+        "disabled": "#8A827866",
+        "accent": "#D96B27",
+        "inverse": "#FAF8F5"
+      },
+      "interactive": {
+        "element": "#EBE6DE",
+        "hover": "#E2DCD4",
+        "active": "#D8D2C8",
+        "selected": "#D8D2C8",
+        "dropTarget": "#D96B2726",
+        "scrollbarThumb": "#00000018",
+        "scrollbarThumbHover": "#0000002e",
+        "scrollbarThumbActive": "#00000045"
+      },
+      "status": {
+        "created": "#2E8540",
+        "modified": "#C47214",
+        "deleted": "#D2434A",
+        "error": "#D2434A",
+        "warning": "#C47214",
+        "info": "#247D8A"
+      },
+      "syntax": {
+        "primary": "#2C2825",
+        "variable": "#2C2825",
+        "property": "#2C2825",
+        "parameter": "#48413A",
+        "function": "#D96B27",
+        "constructor": "#D96B27",
+        "method": "#D96B27",
+        "string": "#784BB8",
+        "regex": "#784BB8",
+        "literal": "#784BB8",
+        "keyword": "#C4434B",
+        "operator": "#C4434B",
+        "control": "#C4434B",
+        "storage": "#C4434B",
+        "escape": "#C4434B",
+        "type": "#1E7E80",
+        "title": "#1E7E80",
+        "builtin": "#1E7E80",
+        "constant": "#B5781E",
+        "boolean": "#B5781E",
+        "number": "#3D352E",
+        "tag": "#2E8540",
+        "attribute": "#B5781E",
+        "comment": "#8A8278",
+        "punctuation": "#6E665D",
+        "emphasis": "#181614"
+      },
+      "ansi": {
+        "black": "#2C2825",
+        "bright_black": "#6A635B",
+        "dim_black": "#8A8278",
+        "red": "#C4434B",
+        "bright_red": "#D9555C",
+        "dim_red": "#A33037",
+        "green": "#2E8540",
+        "bright_green": "#3FA855",
+        "dim_green": "#216330",
+        "yellow": "#C47214",
+        "bright_yellow": "#E0851B",
+        "dim_yellow": "#9E590D",
+        "blue": "#247D8A",
+        "bright_blue": "#319DAE",
+        "dim_blue": "#1B5D66",
+        "magenta": "#784BB8",
+        "bright_magenta": "#9263D4",
+        "dim_magenta": "#5D3794",
+        "cyan": "#1E7E80",
+        "bright_cyan": "#2BA0A3",
+        "dim_cyan": "#165F61",
+        "white": "#FAF8F5",
+        "bright_white": "#FFFFFF",
+        "dim_white": "#EAE6DF"
+      }
     }
   }
 }

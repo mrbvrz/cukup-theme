@@ -1,0 +1,179 @@
+{
+  "$schema": "vscode://schemas/color-theme",
+  "name": "Cukup Terang",
+  "type": "light",
+  "colors": {
+    "editor.background": "#FAF8F5",
+    "editor.foreground": "#2C2825",
+    "editorCursor.foreground": "#D96B27",
+    "editor.lineHighlightBackground": "#00000033",
+    "editorLineNumber.foreground": "#8A8278",
+    "editorLineNumber.activeForeground": "#5A524A",
+    "editorIndentGuide.background": "#EBE7DF",
+    "editorIndentGuide.activeBackground": "#E0DDD5",
+    "editorWhitespace.foreground": "#EBE7DF",
+    "editor.selectionBackground": "#D8D2C888",
+    "sideBar.background": "#F2EFE9",
+    "sideBar.foreground": "#2C2825",
+    "sideBar.border": "#E0DDD5",
+    "sideBarTitle.foreground": "#2C2825",
+    "sideBarSectionHeader.background": "#F2EFE9",
+    "sideBarSectionHeader.foreground": "#2C2825",
+    "activityBar.background": "#EAE6DF",
+    "activityBar.foreground": "#2C2825",
+    "activityBar.inactiveForeground": "#8A8278",
+    "activityBar.activeBorder": "#D96B27",
+    "titleBar.activeBackground": "#FAF8F5",
+    "titleBar.activeForeground": "#2C2825",
+    "titleBar.inactiveBackground": "#FAF8F5",
+    "titleBar.inactiveForeground": "#8A8278",
+    "statusBar.background": "#FAF8F5",
+    "statusBar.foreground": "#2C2825",
+    "statusBar.border": "#E0DDD5",
+    "tab.activeBackground": "#FAF8F5",
+    "tab.activeForeground": "#2C2825",
+    "tab.inactiveBackground": "#EAE6DF",
+    "tab.inactiveForeground": "#8A8278",
+    "tab.border": "#E0DDD5",
+    "terminal.background": "#FAF8F5",
+    "terminal.foreground": "#2C2825",
+    "terminal.ansiBlack": "#2C2825",
+    "terminal.ansiRed": "#C4434B",
+    "terminal.ansiGreen": "#2E8540",
+    "terminal.ansiYellow": "#C47214",
+    "terminal.ansiBlue": "#247D8A",
+    "terminal.ansiMagenta": "#784BB8",
+    "terminal.ansiCyan": "#1E7E80",
+    "terminal.ansiWhite": "#FAF8F5",
+    "terminal.ansiBrightBlack": "#6A635B",
+    "terminal.ansiBrightRed": "#D9555C",
+    "terminal.ansiBrightGreen": "#3FA855",
+    "terminal.ansiBrightYellow": "#E0851B",
+    "terminal.ansiBrightBlue": "#319DAE",
+    "terminal.ansiBrightMagenta": "#9263D4",
+    "terminal.ansiBrightCyan": "#2BA0A3",
+    "terminal.ansiBrightWhite": "#FFFFFF"
+  },
+  "tokenColors": [
+    {
+      "name": "Comments",
+      "scope": [
+        "comment",
+        "punctuation.definition.comment"
+      ],
+      "settings": {
+        "foreground": "#8A8278",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "Variables & Properties (Clean Neutral Text)",
+      "scope": [
+        "variable",
+        "variable.other",
+        "variable.other.property",
+        "variable.other.object.property",
+        "support.type.property-name"
+      ],
+      "settings": {
+        "foreground": "#2C2825"
+      }
+    },
+    {
+      "name": "Parameters",
+      "scope": [
+        "variable.parameter"
+      ],
+      "settings": {
+        "foreground": "#48413A"
+      }
+    },
+    {
+      "name": "Functions & Methods (Hero)",
+      "scope": [
+        "entity.name.function",
+        "support.function",
+        "meta.function-call",
+        "variable.function"
+      ],
+      "settings": {
+        "foreground": "#D96B27"
+      }
+    },
+    {
+      "name": "Strings & Literals",
+      "scope": [
+        "string",
+        "punctuation.definition.string"
+      ],
+      "settings": {
+        "foreground": "#784BB8"
+      }
+    },
+    {
+      "name": "Keywords & Control Flow",
+      "scope": [
+        "keyword",
+        "keyword.control",
+        "storage.type",
+        "storage.modifier"
+      ],
+      "settings": {
+        "foreground": "#C4434B",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "Operators",
+      "scope": [
+        "keyword.operator"
+      ],
+      "settings": {
+        "foreground": "#C4434B"
+      }
+    },
+    {
+      "name": "Types & Classes",
+      "scope": [
+        "entity.name.type",
+        "entity.name.class",
+        "support.class",
+        "support.type"
+      ],
+      "settings": {
+        "foreground": "#1E7E80"
+      }
+    },
+    {
+      "name": "Constants & Numbers",
+      "scope": [
+        "constant",
+        "constant.numeric",
+        "constant.language",
+        "constant.character"
+      ],
+      "settings": {
+        "foreground": "#B5781E"
+      }
+    },
+    {
+      "name": "HTML & JSX Tags",
+      "scope": [
+        "entity.name.tag",
+        "meta.tag.sgml"
+      ],
+      "settings": {
+        "foreground": "#2E8540"
+      }
+    },
+    {
+      "name": "HTML & JSX Attributes",
+      "scope": [
+        "entity.other.attribute-name"
+      ],
+      "settings": {
+        "foreground": "#B5781E"
+      }
+    }
+  ]
+}

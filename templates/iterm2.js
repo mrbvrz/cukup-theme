@@ -27,6 +27,9 @@ function xmlColorDict(key, hex) {
 function generateItermcolors(palette) {
   const p = palette;
   const a = p.ansi;
+  const isLight = p.variant === 'light';
+  const boldColor = isLight ? p.text.primary : a.bright_white;
+  const selTextColor = isLight ? p.surface.canvas : a.bright_white;
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -34,11 +37,11 @@ function generateItermcolors(palette) {
 <dict>
 ${xmlColorDict("Background Color", p.surface.canvas)}
 ${xmlColorDict("Foreground Color", p.text.primary)}
-${xmlColorDict("Bold Color", a.bright_white)}
+${xmlColorDict("Bold Color", boldColor)}
 ${xmlColorDict("Cursor Color", p.text.accent)}
 ${xmlColorDict("Cursor Text Color", p.surface.canvas)}
 ${xmlColorDict("Selection Color", p.interactive.active)}
-${xmlColorDict("Selected Text Color", a.bright_white)}
+${xmlColorDict("Selected Text Color", selTextColor)}
 ${xmlColorDict("Ansi 0 Color", a.black)}
 ${xmlColorDict("Ansi 1 Color", a.red)}
 ${xmlColorDict("Ansi 2 Color", a.green)}

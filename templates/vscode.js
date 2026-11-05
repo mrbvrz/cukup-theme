@@ -14,7 +14,7 @@ function generateVsCodeJson(palette) {
   const theme = {
     "$schema": "vscode://schemas/color-theme",
     "name": `Cukup ${p.name.replace("Cukup ", "")}`,
-    "type": "dark",
+    "type": p.variant || "dark",
     "colors": {
       "editor.background": s.canvas,
       "editor.foreground": t.primary,

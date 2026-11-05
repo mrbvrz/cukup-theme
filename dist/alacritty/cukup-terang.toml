@@ -1,0 +1,51 @@
+# ==============================================================================
+# Cukup Theme for Alacritty Terminal
+# Variant: Cukup Terang
+# Description: Warm Parchment, Terracotta & Deep Celadon — High-contrast tactile paper aesthetic
+# Author: Hasan Suryaman
+# Repo: https://github.com/hasansuryaman/cukup-theme
+# ==============================================================================
+
+[colors.primary]
+background = "#FAF8F5"
+foreground = "#2C2825"
+bright_foreground = "#2C2825"
+dim_foreground = "#8A8278"
+
+[colors.cursor]
+text = "#FAF8F5"
+cursor = "#D96B27"
+
+[colors.selection]
+text = "#FAF8F5"
+background = "#D8D2C8"
+
+[colors.normal]
+black   = "#2C2825"
+red     = "#C4434B"
+green   = "#2E8540"
+yellow  = "#C47214"
+blue    = "#247D8A"
+magenta = "#784BB8"
+cyan    = "#1E7E80"
+white   = "#FAF8F5"
+
+[colors.bright]
+black   = "#6A635B"
+red     = "#D9555C"
+green   = "#3FA855"
+yellow  = "#E0851B"
+blue    = "#319DAE"
+magenta = "#9263D4"
+cyan    = "#2BA0A3"
+white   = "#FFFFFF"
+
+[colors.dim]
+black   = "#8A8278"
+red     = "#A33037"
+green   = "#216330"
+yellow  = "#9E590D"
+blue    = "#1B5D66"
+magenta = "#5D3794"
+cyan    = "#165F61"
+white   = "#EAE6DF"

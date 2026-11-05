@@ -11,6 +11,8 @@ function buildZedStyle(p, blurred = false) {
   const syn = p.syntax;
   const a = p.ansi;
 
+  const isLight = p.variant === "light";
+
   const bg = blurred ? s.canvasBlurred : s.canvas;
   const editorBg = blurred ? "#00000000" : s.canvas;
   const panelBg = blurred ? "#00000000" : s.panel;
@@ -18,7 +20,7 @@ function buildZedStyle(p, blurred = false) {
   const toolbarBg = blurred ? "#00000000" : s.toolbar;
   const tabBarBg = blurred ? "#00000000" : s.tabBar;
   const tabInactiveBg = blurred ? "#00000000" : s.tabInactive;
-  const tabActiveBg = blurred ? "#ffffff08" : s.tabActive;
+  const tabActiveBg = blurred ? (isLight ? "#0000000a" : "#ffffff08") : s.tabActive;
 
   const syntax = {
     "attribute": { "color": syn.attribute },
@@ -259,6 +261,26 @@ function generateZedJson(palettes) {
         "name": "Cukup Kopi (Solid)",
         "appearance": "dark",
         "style": buildZedStyle(palettes.kopi, false)
+      },
+      {
+        "name": "Cukup Light (Blurred)",
+        "appearance": "light",
+        "style": buildZedStyle(palettes.terang, true)
+      },
+      {
+        "name": "Cukup Light (Solid)",
+        "appearance": "light",
+        "style": buildZedStyle(palettes.terang, false)
+      },
+      {
+        "name": "Cukup Terang (Blurred)",
+        "appearance": "light",
+        "style": buildZedStyle(palettes.terang, true)
+      },
+      {
+        "name": "Cukup Terang (Solid)",
+        "appearance": "light",
+        "style": buildZedStyle(palettes.terang, false)
       }
     ]
   };

@@ -5,6 +5,7 @@
 function generateAlacrittyToml(palette, key) {
   const p = palette;
   const ansi = p.ansi;
+  const isLight = p.variant === 'light';
 
   return `# ==============================================================================
 # Cukup Theme for Alacritty Terminal
@@ -17,7 +18,7 @@ function generateAlacrittyToml(palette, key) {
 [colors.primary]
 background = "${p.surface.canvas}"
 foreground = "${p.text.primary}"
-bright_foreground = "${ansi.bright_white}"
+bright_foreground = "${isLight ? p.text.primary : ansi.bright_white}"
 dim_foreground = "${p.text.muted}"
 
 [colors.cursor]
@@ -25,7 +26,7 @@ text = "${p.surface.canvas}"
 cursor = "${p.text.accent}"
 
 [colors.selection]
-text = "${ansi.bright_white}"
+text = "${isLight ? p.surface.canvas : ansi.bright_white}"
 background = "${p.interactive.active}"
 
 [colors.normal]

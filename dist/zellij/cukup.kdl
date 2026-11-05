@@ -44,4 +44,17 @@ themes {
         white "#E0D8D0"
         orange "#E87D4B"
     }
+    cukup-terang {
+        fg "#2C2825"
+        bg "#FAF8F5"
+        black "#2C2825"
+        red "#C4434B"
+        green "#2E8540"
+        yellow "#C47214"
+        blue "#247D8A"
+        magenta "#784BB8"
+        cyan "#1E7E80"
+        white "#FAF8F5"
+        orange "#D96B27"
+    }
 }

@@ -5,6 +5,7 @@
 function generateKittyConf(palette) {
   const p = palette;
   const a = p.ansi;
+  const isLight = p.variant === 'light';
 
   return `# ==============================================================================
 # Cukup Theme for Kitty Terminal
@@ -16,7 +17,7 @@ function generateKittyConf(palette) {
 background            ${p.surface.canvas}
 foreground            ${p.text.primary}
 selection_background   ${p.interactive.active}
-selection_foreground   ${a.bright_white}
+selection_foreground   ${isLight ? p.surface.canvas : a.bright_white}
 
 cursor                ${p.text.accent}
 cursor_text_color     ${p.surface.canvas}
