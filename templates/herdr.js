@@ -44,7 +44,7 @@ function generateHerdrJson(palette) {
       cleanHex(a.bright_blue),
       cleanHex(a.bright_magenta),
       cleanHex(a.bright_cyan),
-      cleanHex(a.bright_white)
+      cleanHex(t.primary)                 // ansi15: Cukup primary text (t.primary) to avoid harsh glaring white in Herdr sidebar (bright(t))
     ],
     "colors": {
       "canvas": cleanHex(s.canvas),
