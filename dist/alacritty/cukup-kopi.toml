@@ -1,0 +1,51 @@
+# ==============================================================================
+# Cukup Theme for Alacritty Terminal
+# Variant: Cukup Kopi
+# Description: Dark Roasted Espresso, Persimmon Orange & Cashmere Mauve — Cozy tactile cafe aesthetic
+# Author: Hasan Suryaman
+# Repo: https://github.com/hasansuryaman/cukup-theme
+# ==============================================================================
+
+[colors.primary]
+background = "#161413"
+foreground = "#E0D8D0"
+bright_foreground = "#F6F1EA"
+dim_foreground = "#7A726A"
+
+[colors.cursor]
+text = "#161413"
+cursor = "#E87D4B"
+
+[colors.selection]
+text = "#F6F1EA"
+background = "#342F2A"
+
+[colors.normal]
+black   = "#161413"
+red     = "#D25C54"
+green   = "#7DAE72"
+yellow  = "#E87D4B"
+blue    = "#5E9EA0"
+magenta = "#B8969E"
+cyan    = "#5E9EA0"
+white   = "#E0D8D0"
+
+[colors.bright]
+black   = "#5F564F"
+red     = "#E07770"
+green   = "#97C58D"
+yellow  = "#F2976C"
+blue    = "#7AB7B9"
+magenta = "#CCAEC7"
+cyan    = "#7AB7B9"
+white   = "#F6F1EA"
+
+[colors.dim]
+black   = "#0F0E0C"
+red     = "#A84139"
+green   = "#5E8955"
+yellow  = "#BA5A2D"
+blue    = "#427B7D"
+magenta = "#917087"
+cyan    = "#427B7D"
+white   = "#9C9287"

@@ -1,0 +1,151 @@
+{
+  "$schema": "vscode://schemas/color-theme",
+  "name": "Cukup Kopi",
+  "type": "dark",
+  "colors": {
+    "editor.background": "#161413",
+    "editor.foreground": "#E0D8D0",
+    "editorCursor.foreground": "#E87D4B",
+    "editor.lineHighlightBackground": "#1E1A1740",
+    "editorLineNumber.foreground": "#5A524A",
+    "editorLineNumber.activeForeground": "#C8BEB4",
+    "editorIndentGuide.background": "#24201C",
+    "editorIndentGuide.activeBackground": "#403932",
+    "editorWhitespace.foreground": "#24201C",
+    "editor.selectionBackground": "#342F2A88",
+    "sideBar.background": "#11100E",
+    "sideBar.foreground": "#E0D8D0",
+    "sideBar.border": "#2A2522",
+    "sideBarTitle.foreground": "#E0D8D0",
+    "sideBarSectionHeader.background": "#11100E",
+    "sideBarSectionHeader.foreground": "#E0D8D0",
+    "activityBar.background": "#0F0E0C",
+    "activityBar.foreground": "#E0D8D0",
+    "activityBar.inactiveForeground": "#7A726A",
+    "activityBar.activeBorder": "#E87D4B",
+    "titleBar.activeBackground": "#161413",
+    "titleBar.activeForeground": "#E0D8D0",
+    "titleBar.inactiveBackground": "#161413",
+    "titleBar.inactiveForeground": "#7A726A",
+    "statusBar.background": "#161413",
+    "statusBar.foreground": "#E0D8D0",
+    "statusBar.border": "#2A2522",
+    "tab.activeBackground": "#161413",
+    "tab.activeForeground": "#E0D8D0",
+    "tab.inactiveBackground": "#11100E",
+    "tab.inactiveForeground": "#7A726A",
+    "tab.border": "#2A2522",
+    "terminal.background": "#161413",
+    "terminal.foreground": "#E0D8D0",
+    "terminal.ansiBlack": "#161413",
+    "terminal.ansiRed": "#D25C54",
+    "terminal.ansiGreen": "#7DAE72",
+    "terminal.ansiYellow": "#E87D4B",
+    "terminal.ansiBlue": "#5E9EA0",
+    "terminal.ansiMagenta": "#B8969E",
+    "terminal.ansiCyan": "#5E9EA0",
+    "terminal.ansiWhite": "#E0D8D0",
+    "terminal.ansiBrightBlack": "#5F564F",
+    "terminal.ansiBrightRed": "#E07770",
+    "terminal.ansiBrightGreen": "#97C58D",
+    "terminal.ansiBrightYellow": "#F2976C",
+    "terminal.ansiBrightBlue": "#7AB7B9",
+    "terminal.ansiBrightMagenta": "#CCAEC7",
+    "terminal.ansiBrightCyan": "#7AB7B9",
+    "terminal.ansiBrightWhite": "#F6F1EA"
+  },
+  "tokenColors": [
+    {
+      "name": "Comments",
+      "scope": [
+        "comment",
+        "punctuation.definition.comment"
+      ],
+      "settings": {
+        "foreground": "#7A726A",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "Functions & Methods (Hero)",
+      "scope": [
+        "entity.name.function",
+        "support.function",
+        "meta.function-call",
+        "variable.function"
+      ],
+      "settings": {
+        "foreground": "#E87D4B"
+      }
+    },
+    {
+      "name": "Properties & Variables",
+      "scope": [
+        "variable",
+        "variable.other.property",
+        "variable.other.object.property",
+        "support.type.property-name"
+      ],
+      "settings": {
+        "foreground": "#E87D4B"
+      }
+    },
+    {
+      "name": "Strings & Literals",
+      "scope": [
+        "string",
+        "punctuation.definition.string"
+      ],
+      "settings": {
+        "foreground": "#B8969E"
+      }
+    },
+    {
+      "name": "Keywords & Operators",
+      "scope": [
+        "keyword",
+        "keyword.control",
+        "keyword.operator",
+        "storage.type",
+        "storage.modifier"
+      ],
+      "settings": {
+        "foreground": "#D25C54"
+      }
+    },
+    {
+      "name": "Types & Classes",
+      "scope": [
+        "entity.name.type",
+        "entity.name.class",
+        "support.class",
+        "support.type"
+      ],
+      "settings": {
+        "foreground": "#5E9EA0"
+      }
+    },
+    {
+      "name": "Constants & Numbers",
+      "scope": [
+        "constant",
+        "constant.numeric",
+        "constant.language",
+        "constant.character"
+      ],
+      "settings": {
+        "foreground": "#CCA062"
+      }
+    },
+    {
+      "name": "HTML & JSX Tags",
+      "scope": [
+        "entity.name.tag",
+        "meta.tag.sgml"
+      ],
+      "settings": {
+        "foreground": "#7DAE72"
+      }
+    }
+  ]
+}

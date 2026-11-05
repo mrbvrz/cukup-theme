@@ -1,0 +1,51 @@
+# ==============================================================================
+# Cukup Theme for Alacritty Terminal
+# Variant: Cukup Malam
+# Description: Deep Pine Slate, Wild Amber & Frost Jade — Cool, serene Nordic night
+# Author: Hasan Suryaman
+# Repo: https://github.com/hasansuryaman/cukup-theme
+# ==============================================================================
+
+[colors.primary]
+background = "#131718"
+foreground = "#D6E0DD"
+bright_foreground = "#F0F5F3"
+dim_foreground = "#6A7875"
+
+[colors.cursor]
+text = "#131718"
+cursor = "#E6A854"
+
+[colors.selection]
+text = "#F0F5F3"
+background = "#2C3739"
+
+[colors.normal]
+black   = "#131718"
+red     = "#D4708A"
+green   = "#74BBA2"
+yellow  = "#E6A854"
+blue    = "#6CA7C8"
+magenta = "#B694C7"
+cyan    = "#74BBA2"
+white   = "#D6E0DD"
+
+[colors.bright]
+black   = "#556461"
+red     = "#E28AA1"
+green   = "#91CFB9"
+yellow  = "#F0BE74"
+blue    = "#88BEE0"
+magenta = "#CBAFE0"
+cyan    = "#91CFB9"
+white   = "#F0F5F3"
+
+[colors.dim]
+black   = "#0C1011"
+red     = "#A84E65"
+green   = "#559480"
+yellow  = "#BD8436"
+blue    = "#4F84A1"
+magenta = "#8E70A1"
+cyan    = "#559480"
+white   = "#8D9C98"

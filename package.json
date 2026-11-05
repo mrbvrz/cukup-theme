@@ -1,0 +1,26 @@
+{
+  "name": "cukup-theme",
+  "version": "1.0.0",
+  "description": "Essentialist multi-platform design system & theme for Alacritty, Zed, VS Code, iTerm2, and more.",
+  "main": "build.js",
+  "scripts": {
+    "build": "node build.js",
+    "build:alacritty": "node build.js --target alacritty",
+    "build:zed": "node build.js --target zed",
+    "build:vscode": "node build.js --target vscode",
+    "build:iterm": "node build.js --target iterm",
+    "preview": "./print_colors.sh"
+  },
+  "keywords": [
+    "theme",
+    "alacritty",
+    "zed",
+    "vscode",
+    "iterm2",
+    "design-system",
+    "minimalist",
+    "dark-theme"
+  ],
+  "author": "Hasan Suryaman",
+  "license": "MIT"
+}
