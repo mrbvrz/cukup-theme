@@ -46,7 +46,10 @@ dist/
 ├── kitty/           # Kitty terminal configs (cukup-senja.conf, dll.)
 ├── zellij/          # Zellij terminal multiplexer (cukup.kdl)
 ├── web/             # Web CSS custom properties (tokens.css) & JSON tokens
-└── tailwind/        # Tailwind CSS preset plugin (cukup-preset.js)
+├── tailwind/        # Tailwind CSS preset plugin (cukup-preset.js)
+├── telegram/        # Telegram Desktop (.tdesktop-theme) & Telegram macOS (.palette)
+├── t3code/          # T3 Code themes (single grouped cukup.json & variants)
+└── herdr/           # Herdr workspace themes (cukup-kopi.json, cukup-senja.json, etc.)
 ```
 
 ---

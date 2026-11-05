@@ -30,6 +30,7 @@ const { generateCssVariables } = require('./templates/web');
 const { generateTailwindPreset } = require('./templates/tailwind');
 const { generateTdesktopColors, generateTelegramMacosPalette, createSolidPng } = require('./templates/telegram');
 const { generateT3CodeJson, generateT3UnifiedThemeJson } = require('./templates/t3code');
+const { generateHerdrJson } = require('./templates/herdr');
 const { execSync } = require('child_process');
 
 // Paths
@@ -172,7 +173,7 @@ function buildTelegram(palettes) {
 }
 
 function buildT3Code(palettes) {
-  console.log('📦 [10/10] Building T3 Code themes...');
+  console.log('📦 [10/11] Building T3 Code themes...');
   const outDir = path.join(DIST_DIR, 't3code');
   ensureDir(outDir);
 
@@ -188,6 +189,28 @@ function buildT3Code(palettes) {
     const outFile = path.join(outDir, `cukup-${key}.json`);
     fs.writeFileSync(outFile, json, 'utf8');
     console.log(`   ✓ ${path.relative(__dirname, outFile)}`);
+  }
+}
+
+function buildHerdr(palettes) {
+  console.log('📦 [11/11] Building Herdr app themes...');
+  const outDir = path.join(DIST_DIR, 'herdr');
+  ensureDir(outDir);
+
+  const herdrThemesDir = path.join(process.env.HOME || '', '.config', 'herdr-app', 'themes');
+  const installToHerdr = fs.existsSync(herdrThemesDir);
+
+  for (const [key, palette] of Object.entries(palettes)) {
+    const json = generateHerdrJson(palette);
+    const outFile = path.join(outDir, `cukup-${key}.json`);
+    fs.writeFileSync(outFile, json, 'utf8');
+    console.log(`   ✓ ${path.relative(__dirname, outFile)}`);
+
+    if (installToHerdr) {
+      const installFile = path.join(herdrThemesDir, `cukup-${key}.json`);
+      fs.writeFileSync(installFile, json, 'utf8');
+      console.log(`     -> Installed to ~/.config/herdr-app/themes/cukup-${key}.json`);
+    }
   }
 }
 
@@ -212,6 +235,7 @@ function main() {
   if (target === 'all' || target === 'tailwind') buildTailwind(palettes);
   if (target === 'all' || target === 'telegram') buildTelegram(palettes);
   if (target === 'all' || target === 't3code' || target === 't3') buildT3Code(palettes);
+  if (target === 'all' || target === 'herdr') buildHerdr(palettes);
 
   console.log('\n✨ Build complete! Output directory: ./dist\n');
 }

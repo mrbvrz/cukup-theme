@@ -13,6 +13,9 @@
     "build:zellij": "node build.js --target zellij",
     "build:web": "node build.js --target web",
     "build:tailwind": "node build.js --target tailwind",
+    "build:telegram": "node build.js --target telegram",
+    "build:t3code": "node build.js --target t3code",
+    "build:herdr": "node build.js --target herdr",
     "preview": "./print_colors.sh"
   },
   "keywords": [
