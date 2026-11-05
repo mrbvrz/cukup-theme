@@ -1,5 +1,6 @@
 {
   "version": 1,
+  "id": "cukup-terang",
   "name": "Cukup Terang",
   "appearance": "light",
   "colors": {
@@ -64,5 +65,9 @@
     "terminalSelection": "#D8D2C8",
     "terminalScrollbar": "#000000",
     "terminalScrollbarHover": "#000000"
+  },
+  "collection": {
+    "id": "cukup",
+    "label": "Cukup"
   }
 }

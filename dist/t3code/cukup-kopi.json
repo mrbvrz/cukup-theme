@@ -1,5 +1,6 @@
 {
   "version": 1,
+  "id": "cukup-kopi",
   "name": "Cukup Kopi",
   "appearance": "dark",
   "colors": {
@@ -64,5 +65,9 @@
     "terminalSelection": "#342F2A",
     "terminalScrollbar": "#ffffff",
     "terminalScrollbarHover": "#ffffff"
+  },
+  "collection": {
+    "id": "cukup",
+    "label": "Cukup"
   }
 }

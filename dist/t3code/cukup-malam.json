@@ -1,5 +1,6 @@
 {
   "version": 1,
+  "id": "cukup-malam",
   "name": "Cukup Malam",
   "appearance": "dark",
   "colors": {
@@ -64,5 +65,9 @@
     "terminalSelection": "#2C3739",
     "terminalScrollbar": "#ffffff",
     "terminalScrollbarHover": "#ffffff"
+  },
+  "collection": {
+    "id": "cukup",
+    "label": "Cukup"
   }
 }

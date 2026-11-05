@@ -29,7 +29,7 @@ const { generateZellijKdl } = require('./templates/zellij');
 const { generateCssVariables } = require('./templates/web');
 const { generateTailwindPreset } = require('./templates/tailwind');
 const { generateTdesktopColors, generateTelegramMacosPalette, createSolidPng } = require('./templates/telegram');
-const { generateT3CodeJson } = require('./templates/t3code');
+const { generateT3CodeJson, generateT3UnifiedThemeJson } = require('./templates/t3code');
 const { execSync } = require('child_process');
 
 // Paths
@@ -176,8 +176,15 @@ function buildT3Code(palettes) {
   const outDir = path.join(DIST_DIR, 't3code');
   ensureDir(outDir);
 
+  // 1. Unified single theme (Cukup with Kopi dark and Terang light variant)
+  const unifiedJson = generateT3UnifiedThemeJson(palettes.kopi, palettes.terang);
+  const unifiedFile = path.join(outDir, 'cukup.json');
+  fs.writeFileSync(unifiedFile, unifiedJson, 'utf8');
+  console.log(`   ✓ ${path.relative(__dirname, unifiedFile)} (Single Grouped Theme)`);
+
+  // 2. Individual standalone variants under "Cukup" collection
   for (const [key, palette] of Object.entries(palettes)) {
-    const json = generateT3CodeJson(palette);
+    const json = generateT3CodeJson(palette, key);
     const outFile = path.join(outDir, `cukup-${key}.json`);
     fs.writeFileSync(outFile, json, 'utf8');
     console.log(`   ✓ ${path.relative(__dirname, outFile)}`);

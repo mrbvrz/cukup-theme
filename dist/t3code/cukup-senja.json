@@ -1,5 +1,6 @@
 {
   "version": 1,
+  "id": "cukup-senja",
   "name": "Cukup Senja",
   "appearance": "dark",
   "colors": {
@@ -64,5 +65,9 @@
     "terminalSelection": "#34342F",
     "terminalScrollbar": "#ffffff",
     "terminalScrollbarHover": "#ffffff"
+  },
+  "collection": {
+    "id": "cukup",
+    "label": "Cukup"
   }
 }
