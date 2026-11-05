@@ -29,6 +29,7 @@ const { generateZellijKdl } = require('./templates/zellij');
 const { generateCssVariables } = require('./templates/web');
 const { generateTailwindPreset } = require('./templates/tailwind');
 const { generateTdesktopColors, generateTelegramMacosPalette, createSolidPng } = require('./templates/telegram');
+const { generateT3CodeJson } = require('./templates/t3code');
 const { execSync } = require('child_process');
 
 // Paths
@@ -144,7 +145,7 @@ function buildTailwind(palettes) {
 }
 
 function buildTelegram(palettes) {
-  console.log('📦 [9/9] Building Telegram Desktop & macOS themes...');
+  console.log('📦 [9/10] Building Telegram Desktop & macOS themes...');
   const outDir = path.join(DIST_DIR, 'telegram');
   ensureDir(outDir);
 
@@ -170,6 +171,19 @@ function buildTelegram(palettes) {
   }
 }
 
+function buildT3Code(palettes) {
+  console.log('📦 [10/10] Building T3 Code themes...');
+  const outDir = path.join(DIST_DIR, 't3code');
+  ensureDir(outDir);
+
+  for (const [key, palette] of Object.entries(palettes)) {
+    const json = generateT3CodeJson(palette);
+    const outFile = path.join(outDir, `cukup-${key}.json`);
+    fs.writeFileSync(outFile, json, 'utf8');
+    console.log(`   ✓ ${path.relative(__dirname, outFile)}`);
+  }
+}
+
 function main() {
   const args = process.argv.slice(2);
   const targetIndex = args.indexOf('--target');
@@ -190,6 +204,7 @@ function main() {
   if (target === 'all' || target === 'web') buildWeb(palettes);
   if (target === 'all' || target === 'tailwind') buildTailwind(palettes);
   if (target === 'all' || target === 'telegram') buildTelegram(palettes);
+  if (target === 'all' || target === 't3code' || target === 't3') buildT3Code(palettes);
 
   console.log('\n✨ Build complete! Output directory: ./dist\n');
 }
