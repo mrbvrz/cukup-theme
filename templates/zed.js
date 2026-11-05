@@ -21,6 +21,7 @@ function buildZedStyle(p, blurred = false) {
   const tabBarBg = blurred ? "#00000000" : s.tabBar;
   const tabInactiveBg = blurred ? "#00000000" : s.tabInactive;
   const tabActiveBg = blurred ? (isLight ? "#0000000a" : "#ffffff08") : s.tabActive;
+  const terminalBg = blurred ? "#00000000" : s.canvas;
 
   const syntax = {
     "attribute": { "color": syn.attribute },
@@ -136,11 +137,11 @@ function buildZedStyle(p, blurred = false) {
     "editor.document_highlight.read_background": t.accent + "26",
     "editor.document_highlight.write_background": t.accent + "33",
     "editor.document_highlight.bracket_background": t.accent + "26",
-    "terminal.background": s.canvas,
+    "terminal.background": terminalBg,
     "terminal.foreground": t.primary,
     "terminal.bright_foreground": a.bright_white,
     "terminal.dim_foreground": t.muted,
-    "terminal.ansi.background": s.canvas,
+    "terminal.ansi.background": terminalBg,
     "terminal.ansi.black": a.black,
     "terminal.ansi.bright_black": a.bright_black,
     "terminal.ansi.dim_black": a.dim_black,
