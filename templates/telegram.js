@@ -85,9 +85,12 @@ function generateTdesktopColors(palette, key) {
   const stat = palette.status;
 
   // Key tokens mapped to Cukup semantics
+  // Main canvas: same color for titlebar, topBar, sidebars, and body
   const mainBg = s.canvas;
-  const panelBg = s.panel || s.canvas;
+  const panelBg = s.canvas; // Keep titlebar, sidebars, and body in seamless harmony
   const elevatedBg = s.elevated || s.surface;
+  const searchInputBg = isLight ? '#EFEBE6' : (s.elevated || '#1E1B19');
+  const searchInputActiveBg = isLight ? '#E5DFD7' : (s.surface || '#25211E');
   const hoverBg = palette.interactive.hover;
   const activeBg = palette.interactive.active;
   const textFg = t.primary;
@@ -188,7 +191,10 @@ placeholderFg: ${subTextFg};
 placeholderFgActive: ${t.secondary};
 inputBorderFg: ${border};
 filterInputBorderFg: ${accent};
-filterInputInactiveBg: ${panelBg};
+filterInputActiveBg: ${searchInputActiveBg};
+filterInputInactiveBg: ${searchInputBg};
+searchedBarBg: ${searchInputBg};
+searchedBarFg: ${textFg};
 
 checkboxFg: ${subTextFg};
 sliderBgInactive: ${border};
@@ -198,8 +204,9 @@ tooltipBg: ${elevatedBg};
 tooltipFg: ${textFg};
 tooltipBorderFg: ${border};
 
-// Window Titlebar
-titleBg: ${panelBg};
+// Window Titlebar & Chat Header (seamless unified background)
+titleBg: ${mainBg};
+titleBgActive: ${mainBg};
 titleShadow: #00000000;
 titleButtonFg: ${subTextFg};
 titleButtonBgOver: ${hoverBg};
@@ -208,6 +215,21 @@ titleButtonCloseBgOver: ${stat.error};
 titleButtonCloseFgOver: #FFFFFF;
 titleFgActive: ${textFg};
 titleFg: ${subTextFg};
+topBarBg: ${mainBg};
+
+// Folder SideBar
+sideBarBg: ${mainBg};
+sideBarBgActive: ${hoverBg};
+sideBarBgRipple: ${activeBg};
+sideBarTextFg: ${subTextFg};
+sideBarTextFgActive: ${accent};
+sideBarIconFg: ${subTextFg};
+sideBarIconFgActive: ${accent};
+sideBarBadgeBg: ${accent};
+sideBarBadgeBgActive: ${accent};
+sideBarBadgeBgMuted: ${subTextFg};
+sideBarBadgeBgMutedActive: ${accent};
+sideBarBadgeFg: ${isLight ? '#FFFFFF' : '#161413'};
 
 // System & Tray Counters
 trayCounterBg: ${accent};
