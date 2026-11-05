@@ -2,10 +2,14 @@
 
 > *"Bukan kurang, bukan berlebih. Pas untuk kejernihan berpikir."*
 
+<p align="center">
+  <img src="assets/preview.png" alt="Cukup Theme Preview" width="100%" />
+</p>
+
 An essentialist, low-contrast, anti-eye-strain color system and multi-platform theme suite designed for long coding sessions and deep focus.
 
 Built upon a **3-Layer Design Token Architecture** (Primitives → Semantics → Target Adapters), compiling from a Single Source of Truth to:
-**Alacritty**, **Zed IDE**, **VS Code / Cursor**, **iTerm2**, **Kitty**, **Zellij**, **Web CSS Variables**, and **Tailwind CSS**.
+**Alacritty**, **Zed IDE**, **VS Code / Cursor**, **Herdr**, **T3 Code**, **Telegram**, **iTerm2**, **Kitty**, **Zellij**, **Web CSS Variables**, and **Tailwind CSS**.
 
 ---
 
