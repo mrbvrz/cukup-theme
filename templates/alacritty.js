@@ -15,18 +15,18 @@ function generateAlacrittyToml(palette, key) {
 # ==============================================================================
 
 [colors.primary]
-background = "${p.bg}"
-foreground = "${p.text}"
+background = "${p.surface.canvas}"
+foreground = "${p.text.primary}"
 bright_foreground = "${ansi.bright_white}"
-dim_foreground = "${p.textMuted}"
+dim_foreground = "${p.text.muted}"
 
 [colors.cursor]
-text = "${p.bg}"
-cursor = "${p.accent}"
+text = "${p.surface.canvas}"
+cursor = "${p.text.accent}"
 
 [colors.selection]
 text = "${ansi.bright_white}"
-background = "${p.elementActive || "#34342F"}"
+background = "${p.interactive.active}"
 
 [colors.normal]
 black   = "${ansi.black}"

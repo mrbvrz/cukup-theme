@@ -6,12 +6,12 @@
     "editor.background": "#181816",
     "editor.foreground": "#D8D5CD",
     "editorCursor.foreground": "#E89058",
-    "editor.lineHighlightBackground": "#20201D40",
-    "editorLineNumber.foreground": "#585750",
+    "editor.lineHighlightBackground": "#20201D33",
+    "editorLineNumber.foreground": "#78776F",
     "editorLineNumber.activeForeground": "#C4C1B9",
-    "editorIndentGuide.background": "#262622",
-    "editorIndentGuide.activeBackground": "#42413A",
-    "editorWhitespace.foreground": "#262622",
+    "editorIndentGuide.background": "#242420",
+    "editorIndentGuide.activeBackground": "#2B2B27",
+    "editorWhitespace.foreground": "#242420",
     "editor.selectionBackground": "#34342F88",
     "sideBar.background": "#131311",
     "sideBar.foreground": "#D8D5CD",
@@ -67,24 +67,34 @@
       }
     },
     {
+      "name": "Variables & Properties (Clean Neutral Text)",
+      "scope": [
+        "variable",
+        "variable.other",
+        "variable.other.property",
+        "variable.other.object.property",
+        "support.type.property-name"
+      ],
+      "settings": {
+        "foreground": "#D8D5CD"
+      }
+    },
+    {
+      "name": "Parameters",
+      "scope": [
+        "variable.parameter"
+      ],
+      "settings": {
+        "foreground": "#C8C4BA"
+      }
+    },
+    {
       "name": "Functions & Methods (Hero)",
       "scope": [
         "entity.name.function",
         "support.function",
         "meta.function-call",
         "variable.function"
-      ],
-      "settings": {
-        "foreground": "#E89058"
-      }
-    },
-    {
-      "name": "Properties & Variables",
-      "scope": [
-        "variable",
-        "variable.other.property",
-        "variable.other.object.property",
-        "support.type.property-name"
       ],
       "settings": {
         "foreground": "#E89058"
@@ -101,13 +111,22 @@
       }
     },
     {
-      "name": "Keywords & Operators",
+      "name": "Keywords & Control Flow",
       "scope": [
         "keyword",
         "keyword.control",
-        "keyword.operator",
         "storage.type",
         "storage.modifier"
+      ],
+      "settings": {
+        "foreground": "#DE6E75",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "Operators",
+      "scope": [
+        "keyword.operator"
       ],
       "settings": {
         "foreground": "#DE6E75"
@@ -145,6 +164,15 @@
       ],
       "settings": {
         "foreground": "#89BA81"
+      }
+    },
+    {
+      "name": "HTML & JSX Attributes",
+      "scope": [
+        "entity.other.attribute-name"
+      ],
+      "settings": {
+        "foreground": "#DDA861"
       }
     }
   ]

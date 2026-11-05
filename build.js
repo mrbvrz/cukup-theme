@@ -1,16 +1,19 @@
 #!/usr/bin/env node
 /**
  * =============================================================================
- * Cukup Multi-Platform Theme Compiler
+ * Cukup Multi-Platform Theme Compiler (Advanced Edition)
  * =============================================================================
- * Single Source of Truth -> Alacritty, Zed, VS Code, iTerm2, and more!
+ * Single Source of Truth -> Alacritty, Zed, VS Code, iTerm2, Kitty, Zellij, Web, Tailwind
  *
  * Usage:
  *   node build.js                  # Compile all targets
  *   node build.js --target alacritty
  *   node build.js --target zed
- *   node build.js --target iterm
  *   node build.js --target vscode
+ *   node build.js --target iterm
+ *   node build.js --target kitty
+ *   node build.js --target zellij
+ *   node build.js --target web
  * =============================================================================
  */
 
@@ -21,6 +24,10 @@ const { generateAlacrittyToml } = require('./templates/alacritty');
 const { generateZedJson } = require('./templates/zed');
 const { generateVsCodeJson } = require('./templates/vscode');
 const { generateItermcolors } = require('./templates/iterm2');
+const { generateKittyConf } = require('./templates/kitty');
+const { generateZellijKdl } = require('./templates/zellij');
+const { generateCssVariables } = require('./templates/web');
+const { generateTailwindPreset } = require('./templates/tailwind');
 
 // Paths
 const TOKENS_PATH = path.join(__dirname, 'tokens', 'palette.json');
@@ -38,7 +45,7 @@ function ensureDir(dir) {
 }
 
 function buildAlacritty(palettes) {
-  console.log('📦 Building Alacritty themes...');
+  console.log('📦 [1/8] Building Alacritty themes...');
   const outDir = path.join(DIST_DIR, 'alacritty');
   ensureDir(outDir);
 
@@ -51,7 +58,7 @@ function buildAlacritty(palettes) {
 }
 
 function buildZed(palettes) {
-  console.log('📦 Building Zed theme...');
+  console.log('📦 [2/8] Building Zed theme...');
   const outDir = path.join(DIST_DIR, 'zed');
   ensureDir(outDir);
 
@@ -62,7 +69,7 @@ function buildZed(palettes) {
 }
 
 function buildVsCode(palettes) {
-  console.log('📦 Building VS Code themes...');
+  console.log('📦 [3/8] Building VS Code themes...');
   const outDir = path.join(DIST_DIR, 'vscode');
   ensureDir(outDir);
 
@@ -75,7 +82,7 @@ function buildVsCode(palettes) {
 }
 
 function buildIterm(palettes) {
-  console.log('📦 Building iTerm2 color schemes...');
+  console.log('📦 [4/8] Building iTerm2 color schemes...');
   const outDir = path.join(DIST_DIR, 'iterm2');
   ensureDir(outDir);
 
@@ -87,29 +94,72 @@ function buildIterm(palettes) {
   }
 }
 
+function buildKitty(palettes) {
+  console.log('📦 [5/8] Building Kitty terminal themes...');
+  const outDir = path.join(DIST_DIR, 'kitty');
+  ensureDir(outDir);
+
+  for (const [key, palette] of Object.entries(palettes)) {
+    const conf = generateKittyConf(palette);
+    const outFile = path.join(outDir, `cukup-${key}.conf`);
+    fs.writeFileSync(outFile, conf, 'utf8');
+    console.log(`   ✓ ${path.relative(__dirname, outFile)}`);
+  }
+}
+
+function buildZellij(palettes) {
+  console.log('📦 [6/8] Building Zellij themes...');
+  const outDir = path.join(DIST_DIR, 'zellij');
+  ensureDir(outDir);
+
+  const kdl = generateZellijKdl(palettes);
+  const outFile = path.join(outDir, 'cukup.kdl');
+  fs.writeFileSync(outFile, kdl, 'utf8');
+  console.log(`   ✓ ${path.relative(__dirname, outFile)}`);
+}
+
+function buildWeb(palettes) {
+  console.log('📦 [7/8] Building Web CSS variables & JSON tokens...');
+  const outDir = path.join(DIST_DIR, 'web');
+  ensureDir(outDir);
+
+  const css = generateCssVariables(palettes);
+  fs.writeFileSync(path.join(outDir, 'tokens.css'), css, 'utf8');
+  fs.writeFileSync(path.join(outDir, 'tokens.json'), JSON.stringify(palettes, null, 2), 'utf8');
+  console.log(`   ✓ ${path.relative(__dirname, path.join(outDir, 'tokens.css'))}`);
+  console.log(`   ✓ ${path.relative(__dirname, path.join(outDir, 'tokens.json'))}`);
+}
+
+function buildTailwind(palettes) {
+  console.log('📦 [8/8] Building Tailwind CSS preset...');
+  const outDir = path.join(DIST_DIR, 'tailwind');
+  ensureDir(outDir);
+
+  const js = generateTailwindPreset(palettes);
+  const outFile = path.join(outDir, 'cukup-preset.js');
+  fs.writeFileSync(outFile, js, 'utf8');
+  console.log(`   ✓ ${path.relative(__dirname, outFile)}`);
+}
+
 function main() {
   const args = process.argv.slice(2);
   const targetIndex = args.indexOf('--target');
   const target = targetIndex !== -1 ? args[targetIndex + 1] : 'all';
 
-  console.log(`\n🌿 Cukup Multi-Platform Theme Compiler [Target: ${target}]\n`);
+  console.log(`\n🌿 Cukup Multi-Platform Theme Compiler (v1.1.0) [Target: ${target}]\n`);
   const data = loadTokens();
   const palettes = data.palettes;
 
   ensureDir(DIST_DIR);
 
-  if (target === 'all' || target === 'alacritty') {
-    buildAlacritty(palettes);
-  }
-  if (target === 'all' || target === 'zed') {
-    buildZed(palettes);
-  }
-  if (target === 'all' || target === 'vscode') {
-    buildVsCode(palettes);
-  }
-  if (target === 'all' || target === 'iterm' || target === 'iterm2') {
-    buildIterm(palettes);
-  }
+  if (target === 'all' || target === 'alacritty') buildAlacritty(palettes);
+  if (target === 'all' || target === 'zed') buildZed(palettes);
+  if (target === 'all' || target === 'vscode') buildVsCode(palettes);
+  if (target === 'all' || target === 'iterm' || target === 'iterm2') buildIterm(palettes);
+  if (target === 'all' || target === 'kitty') buildKitty(palettes);
+  if (target === 'all' || target === 'zellij') buildZellij(palettes);
+  if (target === 'all' || target === 'web') buildWeb(palettes);
+  if (target === 'all' || target === 'tailwind') buildTailwind(palettes);
 
   console.log('\n✨ Build complete! Output directory: ./dist\n');
 }

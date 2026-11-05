@@ -9,6 +9,10 @@
     "build:zed": "node build.js --target zed",
     "build:vscode": "node build.js --target vscode",
     "build:iterm": "node build.js --target iterm",
+    "build:kitty": "node build.js --target kitty",
+    "build:zellij": "node build.js --target zellij",
+    "build:web": "node build.js --target web",
+    "build:tailwind": "node build.js --target tailwind",
     "preview": "./print_colors.sh"
   },
   "keywords": [

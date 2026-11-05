@@ -32,12 +32,12 @@ function generateItermcolors(palette) {
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-${xmlColorDict("Background Color", p.bg)}
-${xmlColorDict("Foreground Color", p.text)}
+${xmlColorDict("Background Color", p.surface.canvas)}
+${xmlColorDict("Foreground Color", p.text.primary)}
 ${xmlColorDict("Bold Color", a.bright_white)}
-${xmlColorDict("Cursor Color", p.accent)}
-${xmlColorDict("Cursor Text Color", p.bg)}
-${xmlColorDict("Selection Color", p.elementActive || "#34342F")}
+${xmlColorDict("Cursor Color", p.text.accent)}
+${xmlColorDict("Cursor Text Color", p.surface.canvas)}
+${xmlColorDict("Selection Color", p.interactive.active)}
 ${xmlColorDict("Selected Text Color", a.bright_white)}
 ${xmlColorDict("Ansi 0 Color", a.black)}
 ${xmlColorDict("Ansi 1 Color", a.red)}

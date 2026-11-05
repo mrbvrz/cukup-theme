@@ -2,15 +2,32 @@
 
 > *"Bukan kurang, bukan berlebih. Pas untuk kejernihan berpikir."*
 
-An essentialist, low-contrast, anti-eye-strain color system and theme built for clarity across terminals, code editors, and development tools.
+An essentialist, low-contrast, anti-eye-strain color system and multi-platform theme suite designed for long coding sessions and deep focus.
 
-Starting with **Alacritty**, **Zed**, **VS Code**, and **iTerm2**, built from a Single Source of Truth (`tokens/palette.json`).
+Built upon a **3-Layer Design Token Architecture** (Primitives → Semantics → Target Adapters), compiling from a Single Source of Truth to:
+**Alacritty**, **Zed IDE**, **VS Code / Cursor**, **iTerm2**, **Kitty**, **Zellij**, **Web CSS Variables**, and **Tailwind CSS**.
 
 ---
 
-## ✨ Design Variants
+## 🎯 The Philosophy of "Cukup"
 
-| Variant | Aesthetic & Philosophy | Primary Accents |
+Most modern syntax themes suffer from **rainbow overload**—every variable, property, and token screams in a different saturated neon color.
+
+**Cukup** applies **Semantic Restraint**:
+1. **Clean Neutral Foundations**: Variable declarations, references, and object properties inherit clean, readable parchment text (`#D8D5CD`). No more "orange or purple walls" when reading dense JSON or data structures.
+2. **Intentional Accents**: Colors only ignite where logic happens:
+   - **Functions & Methods**: Warm Terracotta (`#E89058`) as the hero visual anchor.
+   - **Strings & Literals**: Dusty Lilac (`#B294C7`).
+   - **Keywords & Control Flow**: Soft Rose Rust (`#DE6E75`, italicized).
+   - **Types & Interfaces**: Muted Celadon Teal (`#6BAFAD`).
+   - **Constants & Numbers**: Amber Gold (`#DDA861`).
+   - **Comments**: Warm Sandstone (`#78776F`, italicized).
+
+---
+
+## ✨ Palettes & Variants
+
+| Variant | Aesthetic & Personality | Primary Accents |
 | :--- | :--- | :--- |
 | **Cukup Senja** *(Default)* | Warm terracotta, dusty lilac, warm sandstone on charcoal obsidian. Organic & tactile. | `#E89058` (Clay), `#B294C7` (Lilac), `#6BAFAD` (Celadon) |
 | **Cukup Malam** | Deep pine slate, wild honey amber & frost jade. Cool, serene Nordic night. | `#E6A854` (Amber), `#74BBA2` (Jade), `#6CA7C8` (Glacier) |
@@ -18,93 +35,76 @@ Starting with **Alacritty**, **Zed**, **VS Code**, and **iTerm2**, built from a 
 
 ---
 
-## 🎨 Color Palette (Cukup Senja)
+## 📦 Supported Platforms (`dist/`)
 
 ```
-UI & Backgrounds:
-  Background:      #181816  (Warm Obsidian)
-  Panel / Sidebar: #131311  (Deep Obsidian)
-  Surface:         #1F1F1C  (Elevated Modal)
-  Border:          #2B2B27  (Subtle Muted Divider)
-  Foreground:      #D8D5CD  (Parchment White)
-  Muted:           #78776F  (Warm Stone)
-
-Syntax Hierarchy:
-  Primary / Funcs: #E89058  (Warm Terracotta)
-  Strings:         #B294C7  (Dusty Lilac)
-  Keywords:        #DE6E75  (Rose Rust)
-  Types / Classes: #6BAFAD  (Celadon Teal)
-  Constants:       #DDA861  (Amber Gold)
-  Tags / Success:  #89BA81  (Olive Sage)
+dist/
+├── alacritty/       # Alacritty terminal configs (cukup-senja.toml, cukup-malam.toml, cukup-kopi.toml)
+├── zed/             # Zed IDE multi-theme extension (cukup.json)
+├── vscode/          # VS Code & Cursor themes (cukup-senja.json, cukup-malam.json, cukup-kopi.json)
+├── iterm2/          # iTerm2 color presets (.itermcolors)
+├── kitty/           # Kitty terminal configs (cukup-senja.conf, dll.)
+├── zellij/          # Zellij terminal multiplexer (cukup.kdl)
+├── web/             # Web CSS custom properties (tokens.css) & JSON tokens
+└── tailwind/        # Tailwind CSS preset plugin (cukup-preset.js)
 ```
 
 ---
 
-## 🚀 Installation
+## 🚀 Installation Quickstart
 
 ### 1. Alacritty
-
-Copy or import the theme file into your Alacritty configuration (`~/.config/alacritty/alacritty.toml`):
-
-#### Method A: Direct import in `alacritty.toml`
+Copy or import the theme file into your Alacritty config (`~/.config/alacritty/alacritty.toml`):
 ```toml
 [general]
 import = [
-  # Path to cukup theme
   "~/.config/alacritty/themes/cukup-senja.toml"
 ]
 ```
 
-#### Method B: Copy colors directly
-Open [`dist/alacritty/cukup-senja.toml`](dist/alacritty/cukup-senja.toml) and paste the `[colors]` table into your `alacritty.toml`.
-
----
-
 ### 2. Zed IDE
-
-1. Copy `dist/zed/cukup.json` to your Zed themes directory:
-   ```bash
-   mkdir -p ~/.config/zed/themes
-   cp dist/zed/cukup.json ~/.config/zed/themes/
-   ```
-2. Open Zed settings (`Cmd + ,` or `~/.config/zed/settings.json`) and select:
-   ```json
-   "theme": {
-     "mode": "dark",
-     "dark": "Cukup Senja (Blurred)"
-   }
-   ```
-   *(Variants available: `Cukup Senja (Blurred)`, `Cukup Senja (Solid)`, `Cukup Malam (Blurred)`, `Cukup Kopi (Blurred)`).*
-
----
+Copy [`dist/zed/cukup.json`](dist/zed/cukup.json) to `~/.config/zed/themes/cukup.json`, then select in settings:
+```json
+"theme": {
+  "mode": "dark",
+  "dark": "Cukup Senja (Blurred)"
+}
+```
 
 ### 3. VS Code / Cursor
-
-1. Copy [`dist/vscode/cukup-senja.json`](dist/vscode/cukup-senja.json) to your extensions directory or package it as a VSIX extension:
-   ```bash
-   npm run build:vscode
-   ```
-
----
+Copy any variant from [`dist/vscode/`](dist/vscode/) to your themes directory, or package as a VSIX extension.
 
 ### 4. iTerm2
+Open iTerm2 **Preferences** > **Profiles** > **Colors** > **Color Presets...** > **Import...** and select [`dist/iterm2/Cukup-Senja.itermcolors`](dist/iterm2/Cukup-Senja.itermcolors).
 
-1. Open iTerm2 **Preferences** (`Cmd + ,`) > **Profiles** > **Colors**.
-2. Click **Color Presets...** > **Import...**.
-3. Select [`dist/iterm2/Cukup-Senja.itermcolors`](dist/iterm2/Cukup-Senja.itermcolors).
+### 5. Kitty Terminal
+Include the config in your `kitty.conf`:
+```conf
+include cukup-senja.conf
+```
+
+### 6. Zellij
+Copy [`dist/zellij/cukup.kdl`](dist/zellij/cukup.kdl) into `~/.config/zellij/themes/cukup.kdl` and set `theme: "cukup-senja"`.
+
+### 7. Web & Tailwind CSS
+```js
+// tailwind.config.js
+module.exports = {
+  presets: [require('./dist/tailwind/cukup-preset.js')],
+  // ...
+};
+```
+Or import CSS variables in your web app:
+```css
+@import './dist/web/tokens.css';
+```
 
 ---
 
-## 🛠️ Building & Customizing
+## 🛠️ Design System Compiler
 
-This repository uses a single source of truth for all color tokens (`tokens/palette.json`).
-
-### Requirements
-- Node.js >= 18
-
-### Commands
 ```bash
-# Compile all targets (Alacritty, Zed, VS Code, iTerm2)
+# Compile all 8 targets in ~50ms
 npm run build
 
 # Compile specific targets
@@ -112,32 +112,33 @@ npm run build:alacritty
 npm run build:zed
 npm run build:vscode
 npm run build:iterm
+npm run build:kitty
+npm run build:zellij
+npm run build:web
+npm run build:tailwind
 
-# Preview active colors in terminal
-npm run preview
+# Preview terminal color matrix
+./print_colors.sh
 ```
 
 ---
 
-## 📁 Repository Structure
+## 🏗️ Architecture
 
 ```
-cukup-theme/
-├── tokens/
-│   └── palette.json       # Single Source of Truth
-├── templates/
-│   ├── alacritty.js       # Alacritty TOML generator
-│   ├── zed.js             # Zed JSON generator
-│   ├── vscode.js          # VS Code JSON generator
-│   └── iterm2.js          # iTerm2 .itermcolors generator
-├── dist/                  # Generated theme files
-│   ├── alacritty/
-│   ├── zed/
-│   ├── vscode/
-│   └── iterm2/
-├── build.js               # Multi-platform compiler CLI
-├── print_colors.sh        # Color preview script
-└── package.json
+tokens/
+├── primitives.json   # Layer 1: Raw color scales (obsidian, pine, terracotta, lilac...)
+└── palette.json      # Layer 2: Semantic tokens (surface, text, interactive, status, syntax, ansi)
+
+templates/            # Layer 3: Target Platform Adapters
+├── alacritty.js
+├── zed.js
+├── vscode.js
+├── iterm2.js
+├── kitty.js
+├── zellij.js
+├── web.js
+└── tailwind.js
 ```
 
 ---

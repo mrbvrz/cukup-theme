@@ -4,7 +4,11 @@
 
 function generateVsCodeJson(palette) {
   const p = palette;
-  const s = p.syntax;
+  const s = p.surface;
+  const b = p.border;
+  const t = p.text;
+  const i = p.interactive;
+  const syn = p.syntax;
   const a = p.ansi;
 
   const theme = {
@@ -12,40 +16,40 @@ function generateVsCodeJson(palette) {
     "name": `Cukup ${p.name.replace("Cukup ", "")}`,
     "type": "dark",
     "colors": {
-      "editor.background": p.bg,
-      "editor.foreground": p.text,
-      "editorCursor.foreground": p.accent,
-      "editor.lineHighlightBackground": p.activeLineBg.slice(0, 7) + "40",
-      "editorLineNumber.foreground": p.lineNumber,
-      "editorLineNumber.activeForeground": p.activeLineNumber,
-      "editorIndentGuide.background": p.indentGuide,
-      "editorIndentGuide.activeBackground": p.indentGuideActive,
-      "editorWhitespace.foreground": p.indentGuide,
-      "editor.selectionBackground": p.elementSelected + "88",
-      "sideBar.background": p.panelBg,
-      "sideBar.foreground": p.text,
-      "sideBar.border": p.border,
-      "sideBarTitle.foreground": p.text,
-      "sideBarSectionHeader.background": p.panelBg,
-      "sideBarSectionHeader.foreground": p.text,
-      "activityBar.background": p.tabBarBg,
-      "activityBar.foreground": p.text,
-      "activityBar.inactiveForeground": p.textMuted,
-      "activityBar.activeBorder": p.accent,
-      "titleBar.activeBackground": p.bg,
-      "titleBar.activeForeground": p.text,
-      "titleBar.inactiveBackground": p.bg,
-      "titleBar.inactiveForeground": p.textMuted,
-      "statusBar.background": p.bg,
-      "statusBar.foreground": p.text,
-      "statusBar.border": p.border,
-      "tab.activeBackground": p.bg,
-      "tab.activeForeground": p.text,
-      "tab.inactiveBackground": p.tabInactiveBg,
-      "tab.inactiveForeground": p.textMuted,
-      "tab.border": p.border,
-      "terminal.background": p.bg,
-      "terminal.foreground": p.text,
+      "editor.background": s.canvas,
+      "editor.foreground": t.primary,
+      "editorCursor.foreground": t.accent,
+      "editor.lineHighlightBackground": s.activeLine.slice(0, 7) + "33",
+      "editorLineNumber.foreground": t.muted,
+      "editorLineNumber.activeForeground": t.secondary,
+      "editorIndentGuide.background": b.subtle,
+      "editorIndentGuide.activeBackground": b.default,
+      "editorWhitespace.foreground": b.subtle,
+      "editor.selectionBackground": i.selected + "88",
+      "sideBar.background": s.panel,
+      "sideBar.foreground": t.primary,
+      "sideBar.border": b.default,
+      "sideBarTitle.foreground": t.primary,
+      "sideBarSectionHeader.background": s.panel,
+      "sideBarSectionHeader.foreground": t.primary,
+      "activityBar.background": s.tabBar,
+      "activityBar.foreground": t.primary,
+      "activityBar.inactiveForeground": t.muted,
+      "activityBar.activeBorder": t.accent,
+      "titleBar.activeBackground": s.canvas,
+      "titleBar.activeForeground": t.primary,
+      "titleBar.inactiveBackground": s.canvas,
+      "titleBar.inactiveForeground": t.muted,
+      "statusBar.background": s.canvas,
+      "statusBar.foreground": t.primary,
+      "statusBar.border": b.default,
+      "tab.activeBackground": s.canvas,
+      "tab.activeForeground": t.primary,
+      "tab.inactiveBackground": s.tabInactive,
+      "tab.inactiveForeground": t.muted,
+      "tab.border": b.default,
+      "terminal.background": s.canvas,
+      "terminal.foreground": t.primary,
       "terminal.ansiBlack": a.black,
       "terminal.ansiRed": a.red,
       "terminal.ansiGreen": a.green,
@@ -67,7 +71,23 @@ function generateVsCodeJson(palette) {
       {
         "name": "Comments",
         "scope": ["comment", "punctuation.definition.comment"],
-        "settings": { "foreground": s.comment, "fontStyle": "italic" }
+        "settings": { "foreground": syn.comment, "fontStyle": "italic" }
+      },
+      {
+        "name": "Variables & Properties (Clean Neutral Text)",
+        "scope": [
+          "variable",
+          "variable.other",
+          "variable.other.property",
+          "variable.other.object.property",
+          "support.type.property-name"
+        ],
+        "settings": { "foreground": syn.variable }
+      },
+      {
+        "name": "Parameters",
+        "scope": ["variable.parameter"],
+        "settings": { "foreground": syn.parameter }
       },
       {
         "name": "Functions & Methods (Hero)",
@@ -77,33 +97,27 @@ function generateVsCodeJson(palette) {
           "meta.function-call",
           "variable.function"
         ],
-        "settings": { "foreground": s.function }
-      },
-      {
-        "name": "Properties & Variables",
-        "scope": [
-          "variable",
-          "variable.other.property",
-          "variable.other.object.property",
-          "support.type.property-name"
-        ],
-        "settings": { "foreground": s.property }
+        "settings": { "foreground": syn.function }
       },
       {
         "name": "Strings & Literals",
         "scope": ["string", "punctuation.definition.string"],
-        "settings": { "foreground": s.string }
+        "settings": { "foreground": syn.string }
       },
       {
-        "name": "Keywords & Operators",
+        "name": "Keywords & Control Flow",
         "scope": [
           "keyword",
           "keyword.control",
-          "keyword.operator",
           "storage.type",
           "storage.modifier"
         ],
-        "settings": { "foreground": s.keyword }
+        "settings": { "foreground": syn.keyword, "fontStyle": "italic" }
+      },
+      {
+        "name": "Operators",
+        "scope": ["keyword.operator"],
+        "settings": { "foreground": syn.operator }
       },
       {
         "name": "Types & Classes",
@@ -113,7 +127,7 @@ function generateVsCodeJson(palette) {
           "support.class",
           "support.type"
         ],
-        "settings": { "foreground": s.type }
+        "settings": { "foreground": syn.type }
       },
       {
         "name": "Constants & Numbers",
@@ -123,12 +137,17 @@ function generateVsCodeJson(palette) {
           "constant.language",
           "constant.character"
         ],
-        "settings": { "foreground": s.constant }
+        "settings": { "foreground": syn.constant }
       },
       {
         "name": "HTML & JSX Tags",
         "scope": ["entity.name.tag", "meta.tag.sgml"],
-        "settings": { "foreground": s.tag }
+        "settings": { "foreground": syn.tag }
+      },
+      {
+        "name": "HTML & JSX Attributes",
+        "scope": ["entity.other.attribute-name"],
+        "settings": { "foreground": syn.attribute }
       }
     ]
   };

@@ -1,0 +1,47 @@
+// ==============================================================================
+// Cukup Themes for Zellij Terminal Multiplexer
+// Author: Hasan Suryaman
+// Repo: https://github.com/hasansuryaman/cukup-theme
+// ==============================================================================
+
+themes {
+    cukup-senja {
+        fg "#D8D5CD"
+        bg "#181816"
+        black "#181816"
+        red "#DE6E75"
+        green "#89BA81"
+        yellow "#E89058"
+        blue "#6BAFAD"
+        magenta "#B294C7"
+        cyan "#6BAFAD"
+        white "#D8D5CD"
+        orange "#E89058"
+    }
+    cukup-malam {
+        fg "#D6E0DD"
+        bg "#131718"
+        black "#131718"
+        red "#D4708A"
+        green "#74BBA2"
+        yellow "#E6A854"
+        blue "#6CA7C8"
+        magenta "#B694C7"
+        cyan "#74BBA2"
+        white "#D6E0DD"
+        orange "#E6A854"
+    }
+    cukup-kopi {
+        fg "#E0D8D0"
+        bg "#161413"
+        black "#161413"
+        red "#D25C54"
+        green "#7DAE72"
+        yellow "#E87D4B"
+        blue "#5E9EA0"
+        magenta "#B8969E"
+        cyan "#5E9EA0"
+        white "#E0D8D0"
+        orange "#E87D4B"
+    }
+}
