@@ -4,6 +4,9 @@
  * =============================================================================
  * Generates official T3 Code theme configuration JSON files matching the
  * T3 Code v1 appearance specification.
+ *
+ * Designed with seamless visual harmony (unified background across all columns:
+ * canvas, chrome, sidebar, toolbar, terminal, and surfaces matching Zed's aesthetic).
  * =============================================================================
  */
 
@@ -13,14 +16,10 @@ function generateT3CodeJson(palette) {
   const b = palette.border;
   const t = palette.text;
   const stat = palette.status;
-  const syn = palette.syntax;
   const inter = palette.interactive;
 
-  const canvas = s.canvas;
-  const chrome = s.panel || s.canvas;
-  const surface = s.surface || s.canvas;
-  const surfaceRaised = s.elevated || s.surface;
-  const surfaceOverlay = s.panelOverlay || s.panel || '#11100E';
+  // Seamless uniform background across all columns (like Zed / Cukup philosophy)
+  const unifiedCanvas = s.canvas;
 
   const text = t.primary;
   const textMuted = t.muted;
@@ -33,17 +32,21 @@ function generateT3CodeJson(palette) {
     name: palette.name,
     appearance: isLight ? 'light' : 'dark',
     colors: {
-      canvas: canvas,
-      chrome: chrome,
-      toolbar: chrome,
+      searchMatchBackground: isLight ? '#E5DFD7' : '#342F2A',
+      searchMatchForeground: text,
+      searchMatchActiveBackground: accent,
+      searchMatchActiveForeground: accentForeground,
+      canvas: unifiedCanvas,
+      chrome: unifiedCanvas,
+      toolbar: unifiedCanvas,
       toolbarForeground: text,
       toolbarBorder: border,
-      toolbarControl: surfaceRaised,
+      toolbarControl: unifiedCanvas,
       toolbarControlForeground: text,
       toolbarControlHover: inter.hover,
-      surface: surface,
-      surfaceRaised: surfaceRaised,
-      surfaceOverlay: surfaceOverlay,
+      surface: unifiedCanvas,
+      surfaceRaised: unifiedCanvas,
+      surfaceOverlay: unifiedCanvas,
       text: text,
       textMuted: textMuted,
       border: border,
@@ -51,9 +54,9 @@ function generateT3CodeJson(palette) {
       focus: accent,
       accent: accent,
       accentForeground: accentForeground,
-      secondary: surfaceRaised,
+      secondary: inter.hover,
       secondaryForeground: text,
-      muted: surfaceRaised,
+      muted: inter.hover,
       mutedForeground: textMuted,
       placeholder: t.placeholder ? t.placeholder.slice(0, 7) : textMuted,
       secondaryLabel: textMuted,
@@ -69,22 +72,22 @@ function generateT3CodeJson(palette) {
       updateSurface: isLight ? '#EBF5F5' : '#1B2C2D',
       accentSurface: inter.hover,
       accentSurfaceForeground: text,
-      messageSurface: surfaceRaised,
+      messageSurface: unifiedCanvas,
       messageForeground: text,
       messageAction: accent,
       messageActionForeground: accentForeground,
       messageActionHover: isLight ? '#C55F20' : '#F2A979',
-      codeBackground: surfaceOverlay,
+      codeBackground: isLight ? '#F5EFEB' : (s.panelOverlay || '#11100E'),
       codeForeground: text,
-      sidebar: chrome,
+      sidebar: unifiedCanvas,
       sidebarForeground: text,
       sidebarMutedForeground: textMuted,
-      sidebarControlSurface: surfaceRaised,
+      sidebarControlSurface: unifiedCanvas,
       sidebarRowHover: inter.hover,
       sidebarRowActive: inter.active,
       sidebarRowSelected: inter.selected,
       sidebarBorder: border,
-      terminalBackground: canvas,
+      terminalBackground: unifiedCanvas,
       terminalForeground: text,
       terminalCursor: accent,
       terminalSelection: inter.selected,
