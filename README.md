@@ -152,11 +152,11 @@ templates/            # Layer 3: Target Platform Adapters
 
 ## 🖼️ Official Wallpapers (4K MacBook 16:10)
 
-Minimalist, text-free, anti-eye-strain wallpapers rendered in **3840×2400** (16:10 aspect ratio for MacBook Pro / Air displays):
+Minimalist, text-free, anti-eye-strain **3D Color Waves** (Stacked Tinted Frosted Glass) rendered in **3840×2400** (16:10 aspect ratio for MacBook Pro / Air Liquid Retina displays):
 
-| Cukup Dark (Kopi / Senja / Malam) | Cukup Light (Terang) |
+| Cukup Dark Waves (Kopi / Senja / Malam) | Cukup Light Waves (Terang) |
 | :---: | :---: |
-| <img src="assets/wallpaper-dark.png" alt="Cukup Dark Wallpaper" width="100%" /> | <img src="assets/wallpaper-light.png" alt="Cukup Light Wallpaper" width="100%" /> |
+| <img src="assets/wallpaper-dark.png" alt="Cukup Dark 3D Waves Wallpaper" width="100%" /> | <img src="assets/wallpaper-light.png" alt="Cukup Light 3D Waves Wallpaper" width="100%" /> |
 | [`assets/wallpaper-dark.png`](assets/wallpaper-dark.png) | [`assets/wallpaper-light.png`](assets/wallpaper-light.png) |
 
 ---
