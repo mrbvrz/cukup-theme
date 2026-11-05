@@ -77,7 +77,7 @@ function generateT3CodeJson(palette) {
       messageAction: accent,
       messageActionForeground: accentForeground,
       messageActionHover: isLight ? '#C55F20' : '#F2A979',
-      codeBackground: isLight ? '#F5EFEB' : (s.panelOverlay || '#11100E'),
+      codeBackground: unifiedCanvas,
       codeForeground: text,
       sidebar: unifiedCanvas,
       sidebarForeground: text,

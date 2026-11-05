@@ -48,7 +48,7 @@
     "messageAction": "#E87D4B",
     "messageActionForeground": "#161413",
     "messageActionHover": "#F2A979",
-    "codeBackground": "#11100E",
+    "codeBackground": "#161413",
     "codeForeground": "#E0D8D0",
     "sidebar": "#161413",
     "sidebarForeground": "#E0D8D0",
