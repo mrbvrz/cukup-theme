@@ -28,6 +28,8 @@ const { generateKittyConf } = require('./templates/kitty');
 const { generateZellijKdl } = require('./templates/zellij');
 const { generateCssVariables } = require('./templates/web');
 const { generateTailwindPreset } = require('./templates/tailwind');
+const { generateTdesktopColors, generateTelegramMacosPalette, createSolidPng } = require('./templates/telegram');
+const { execSync } = require('child_process');
 
 // Paths
 const TOKENS_PATH = path.join(__dirname, 'tokens', 'palette.json');
@@ -131,7 +133,7 @@ function buildWeb(palettes) {
 }
 
 function buildTailwind(palettes) {
-  console.log('📦 [8/8] Building Tailwind CSS preset...');
+  console.log('📦 [8/9] Building Tailwind CSS preset...');
   const outDir = path.join(DIST_DIR, 'tailwind');
   ensureDir(outDir);
 
@@ -139,6 +141,33 @@ function buildTailwind(palettes) {
   const outFile = path.join(outDir, 'cukup-preset.js');
   fs.writeFileSync(outFile, js, 'utf8');
   console.log(`   ✓ ${path.relative(__dirname, outFile)}`);
+}
+
+function buildTelegram(palettes) {
+  console.log('📦 [9/9] Building Telegram Desktop & macOS themes...');
+  const outDir = path.join(DIST_DIR, 'telegram');
+  ensureDir(outDir);
+
+  for (const [key, palette] of Object.entries(palettes)) {
+    // 1. Telegram macOS (.palette)
+    const macosPalette = generateTelegramMacosPalette(palette);
+    const macosFile = path.join(outDir, `Cukup-${key.charAt(0).toUpperCase() + key.slice(1)}.palette`);
+    fs.writeFileSync(macosFile, macosPalette, 'utf8');
+    console.log(`   ✓ ${path.relative(__dirname, macosFile)}`);
+
+    // 2. Telegram Desktop (.tdesktop-theme)
+    const tdesktopColors = generateTdesktopColors(palette, key);
+    const themeDir = path.join(outDir, `tdesktop_${key}`);
+    ensureDir(themeDir);
+    fs.writeFileSync(path.join(themeDir, 'colors.tdesktop-theme'), tdesktopColors, 'utf8');
+    const png = createSolidPng(palette.surface.canvas);
+    fs.writeFileSync(path.join(themeDir, 'tiled.png'), png);
+
+    const zipFile = path.join(outDir, `cukup-${key}.tdesktop-theme`);
+    execSync(`cd "${themeDir}" && zip -q -r "${zipFile}" colors.tdesktop-theme tiled.png`);
+    execSync(`rm -rf "${themeDir}"`);
+    console.log(`   ✓ ${path.relative(__dirname, zipFile)}`);
+  }
 }
 
 function main() {
@@ -160,6 +189,7 @@ function main() {
   if (target === 'all' || target === 'zellij') buildZellij(palettes);
   if (target === 'all' || target === 'web') buildWeb(palettes);
   if (target === 'all' || target === 'tailwind') buildTailwind(palettes);
+  if (target === 'all' || target === 'telegram') buildTelegram(palettes);
 
   console.log('\n✨ Build complete! Output directory: ./dist\n');
 }

@@ -1,0 +1,131 @@
+// =============================================================================
+// Cukup Theme for Telegram macOS (Cukup Malam)
+// Author: Hasan Suryaman
+// Repository: https://github.com/mrbvrz/cukup-theme
+// =============================================================================
+
+name = Cukup Malam
+isDark = 1
+tinted = 0
+parent = dark
+copyright = Cukup Theme (https://github.com/mrbvrz/cukup-theme)
+
+basicAccent = #E6A854
+background = #131718
+text = #D6E0DD
+grayText = #6A7875
+link = #E6A854
+accent = #E6A854
+redUI = #D4708A
+greenUI = #74BBA2
+
+blackTransparent = #000000:0.6
+grayTransparent = #1B2123:0.5
+grayUI = #6A7875
+darkGrayText = #6A7875
+accentSelect = #252E30
+selectText = #252E30
+border = #1B2223
+grayBackground = #0E1213
+grayForeground = #252E30
+grayIcon = #6A7875
+accentIcon = #E6A854
+badgeMuted = #6A7875
+badge = #E6A854
+indicatorColor = #74BBA2
+selectMessage = #252E30
+
+monospacedPre = #74BBA2
+monospacedCode = #E6A854
+monospacedPreBubble_incoming = #74BBA2
+monospacedPreBubble_outgoing = #74BBA2
+monospacedCodeBubble_incoming = #E6A854
+monospacedCodeBubble_outgoing = #E6A854
+
+selectTextBubble_incoming = #E6A854:0.3
+selectTextBubble_outgoing = #E6A854:0.3
+bubbleBackground_incoming = #1B2123
+bubbleBackground_outgoing = #28231E
+bubbleBorder_incoming = #1B2123
+bubbleBorder_outgoing = #28231E
+grayTextBubble_incoming = #6A7875
+grayTextBubble_outgoing = #6A7875
+grayIconBubble_incoming = #6A7875
+grayIconBubble_outgoing = #6A7875
+accentIconBubble_incoming = #E6A854
+accentIconBubble_outgoing = #E6A854
+linkBubble_incoming = #E6A854
+linkBubble_outgoing = #E6A854
+textBubble_incoming = #D6E0DD
+textBubble_outgoing = #D6E0DD
+selectMessageBubble = #E6A854:0.25
+
+fileActivityBackground = #E6A854
+fileActivityForeground = #161413
+fileActivityBackgroundBubble_incoming = #E6A854
+fileActivityBackgroundBubble_outgoing = #E6A854
+fileActivityForegroundBubble_incoming = #161413
+fileActivityForegroundBubble_outgoing = #161413
+
+waveformBackground = #6A7875
+waveformForeground = #E6A854
+waveformBackgroundBubble_incoming = #6A7875
+waveformBackgroundBubble_outgoing = #6A7875
+waveformForegroundBubble_incoming = #E6A854
+waveformForegroundBubble_outgoing = #E6A854
+
+webPreviewActivity = #E6A854
+webPreviewActivityBubble_incoming = #E6A854
+webPreviewActivityBubble_outgoing = #E6A854
+
+redBubble_incoming = #D4708A
+redBubble_outgoing = #D4708A
+greenBubble_incoming = #74BBA2
+greenBubble_outgoing = #74BBA2
+
+chatReplyTitle = #E6A854
+chatReplyTextEnabled = #D6E0DD
+chatReplyTextDisabled = #6A7875
+chatReplyTitleBubble_incoming = #E6A854
+chatReplyTitleBubble_outgoing = #E6A854
+chatReplyTextEnabledBubble_incoming = #D6E0DD
+chatReplyTextEnabledBubble_outgoing = #D6E0DD
+chatReplyTextDisabledBubble_incoming = #6A7875
+chatReplyTextDisabledBubble_outgoing = #6A7875
+
+groupPeerNameRed = #DE6E75
+groupPeerNameOrange = #E89058
+groupPeerNameViolet = #B294C7
+groupPeerNameGreen = #89BA81
+groupPeerNameCyan = #6BAFAD
+groupPeerNameLightBlue = #5E9EA0
+groupPeerNameBlue = #6BAFAD
+
+peerAvatarRedTop = #EA8A90
+peerAvatarRedBottom = #DE6E75
+peerAvatarOrangeTop = #F2A979
+peerAvatarOrangeBottom = #E89058
+peerAvatarVioletTop = #C9B2DB
+peerAvatarVioletBottom = #B294C7
+peerAvatarGreenTop = #A2D19A
+peerAvatarGreenBottom = #89BA81
+peerAvatarCyanTop = #8ACBC9
+peerAvatarCyanBottom = #6BAFAD
+peerAvatarBlueTop = #7FBEC0
+peerAvatarBlueBottom = #5E9EA0
+peerAvatarPinkTop = #DE6E75
+peerAvatarPinkBottom = #B84E55
+
+bubbleBackgroundHighlight_incoming = #252E30
+bubbleBackgroundHighlight_outgoing = #252E30
+chatDateActive = #1B2123
+chatDateText = #D6E0DD
+
+chatBackground = #131718
+listBackground = #0E1213
+listGrayText = #6A7875
+grayHighlight = #252E30
+focusAnimationColor = #E6A854
+vibrant = #252E30
+premium = #E6A854
+wallpaper = #131718
