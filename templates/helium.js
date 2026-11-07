@@ -40,23 +40,23 @@ function generateHeliumManifest(palette, variantKey, blurred = false) {
     : (palette.description || 'Cukup Theme for Helium and Chromium browsers');
 
   const frameColor = blurred
-    ? hexToRgba(s.tabBar || s.panel, 0.45)
+    ? hexToRgba(s.tabBar || s.panel, 0.05)
     : hexToRgba(s.tabBar || s.panel);
 
   const frameInactiveColor = blurred
-    ? hexToRgba(s.panel, 0.55)
+    ? hexToRgba(s.panel, 0.1)
     : hexToRgba(s.panel);
 
   const toolbarColor = blurred
-    ? hexToRgba(s.toolbar || s.surface, 0.72)
+    ? hexToRgba(s.toolbar || s.surface, 0.2)
     : hexToRgba(s.toolbar || s.surface);
 
   const omniboxBgColor = blurred
-    ? hexToRgba(s.panel, 0.78)
+    ? hexToRgba(s.panel, 0.28)
     : hexToRgba(s.panel);
 
   const ntpBgColor = blurred
-    ? hexToRgba(s.canvas, 0.85)
+    ? hexToRgba(s.canvas, 0.35)
     : hexToRgba(s.canvas);
 
   const manifest = {
