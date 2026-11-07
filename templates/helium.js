@@ -10,6 +10,7 @@
  */
 
 const zlib = require('zlib');
+const { generateNewTabHtml } = require('./newtab');
 
 function hexToRgb(h) {
   if (!h) return [0, 0, 0];
@@ -61,11 +62,14 @@ function generateHeliumManifest(palette, variantKey, blurred = false) {
 
   const manifest = {
     manifest_version: 3,
-    version: '1.2.0',
+    version: '1.3.0',
     name: themeName,
     description: themeDesc,
     icons: {
       "128": "icon.png"
+    },
+    chrome_url_overrides: {
+      newtab: "newtab.html"
     },
     theme: {
       colors: {
@@ -166,5 +170,6 @@ function createThemeIcon(bgHex, accentHex) {
 
 module.exports = {
   generateHeliumManifest,
+  generateNewTabHtml,
   createThemeIcon
 };

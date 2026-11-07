@@ -31,7 +31,7 @@ const { generateTailwindPreset } = require('./templates/tailwind');
 const { generateTdesktopColors, generateTelegramMacosPalette, createSolidPng } = require('./templates/telegram');
 const { generateT3CodeJson, generateT3UnifiedThemeJson } = require('./templates/t3code');
 const { generateHerdrJson } = require('./templates/herdr');
-const { generateHeliumManifest, createThemeIcon } = require('./templates/helium');
+const { generateHeliumManifest, generateNewTabHtml, createThemeIcon } = require('./templates/helium');
 const { execSync } = require('child_process');
 
 // Paths
@@ -245,6 +245,9 @@ function buildHelium(palettes) {
       const manifestJson = generateHeliumManifest(palette, key, v.blurred);
       fs.writeFileSync(path.join(themeDistDir, 'manifest.json'), manifestJson, 'utf8');
 
+      const newtabHtml = generateNewTabHtml(palette, key);
+      fs.writeFileSync(path.join(themeDistDir, 'newtab.html'), newtabHtml, 'utf8');
+
       const iconPng = createThemeIcon(palette.surface.canvas, palette.text.accent);
       fs.writeFileSync(path.join(themeDistDir, 'icon.png'), iconPng);
 
@@ -254,6 +257,7 @@ function buildHelium(palettes) {
       const userThemeDir = path.join(heliumThemesDir, v.id);
       ensureDir(userThemeDir);
       fs.writeFileSync(path.join(userThemeDir, 'manifest.json'), manifestJson, 'utf8');
+      fs.writeFileSync(path.join(userThemeDir, 'newtab.html'), newtabHtml, 'utf8');
       fs.writeFileSync(path.join(userThemeDir, 'icon.png'), iconPng);
       if (fs.existsSync(path.join(userThemeDir, 'Cached Theme.pak'))) {
         fs.unlinkSync(path.join(userThemeDir, 'Cached Theme.pak'));
@@ -265,6 +269,7 @@ function buildHelium(palettes) {
         const dotfilesThemeDir = path.join(dotfilesHeliumThemesDir, v.id);
         ensureDir(dotfilesThemeDir);
         fs.writeFileSync(path.join(dotfilesThemeDir, 'manifest.json'), manifestJson, 'utf8');
+        fs.writeFileSync(path.join(dotfilesThemeDir, 'newtab.html'), newtabHtml, 'utf8');
         fs.writeFileSync(path.join(dotfilesThemeDir, 'icon.png'), iconPng);
         if (fs.existsSync(path.join(dotfilesThemeDir, 'Cached Theme.pak'))) {
           fs.unlinkSync(path.join(dotfilesThemeDir, 'Cached Theme.pak'));
