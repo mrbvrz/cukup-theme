@@ -38,26 +38,26 @@ function generateHeliumManifest(palette, variantKey, blurred = false) {
     ? `${palette.description || 'Cukup Theme for Helium'} — Ultra-translucent glass edition for native macOS blur`
     : (palette.description || 'Cukup Theme for Helium and Chromium browsers');
 
-  // For blurred vibrancy, frame is near 0 for full native frosted glass blur,
-  // and toolbar is a subtle 15% glass sheen for contrast and structure.
+  // For blurred vibrancy, frame and toolbar are 0 for maximum native frosted glass blur,
+  // omnibox is a whisper-light 8% sheen for subtle boundary.
   const frameColor = blurred
     ? hexToRgba(s.tabBar || s.panel, 0.0)
     : hexToRgb(s.tabBar || s.panel);
 
   const frameInactiveColor = blurred
-    ? hexToRgba(s.panel, 0.05)
+    ? hexToRgba(s.panel, 0.0)
     : hexToRgb(s.panel);
 
   const toolbarColor = blurred
-    ? hexToRgba(s.toolbar || s.surface, 0.15)
+    ? hexToRgba(s.toolbar || s.surface, 0.0)
     : hexToRgb(s.toolbar || s.surface);
 
   const omniboxBgColor = blurred
-    ? hexToRgba(s.panel, 0.22)
+    ? hexToRgba(s.panel, 0.08)
     : hexToRgb(s.panel);
 
   const ntpBgColor = blurred
-    ? hexToRgba(s.canvas, 0.25)
+    ? hexToRgba(s.canvas, 0.0)
     : hexToRgb(s.canvas);
 
   const manifest = {
