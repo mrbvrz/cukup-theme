@@ -142,17 +142,17 @@ function generateNewTabHtml(palette, variantKey) {
     /* Atmospheric Ambient Backlight */
     .ambient-glow {
       position: fixed;
-      inset: -20%;
-      width: 140%;
-      height: 140%;
+      inset: 0;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
       z-index: 0;
       opacity: var(--aura-intensity);
       background:
-        radial-gradient(circle at 18% 15%, rgba(${accentRgb}, 0.14) 0%, transparent 55%),
-        radial-gradient(circle at 82% 50%, rgba(145, 75, 40, 0.10) 0%, transparent 60%),
-        radial-gradient(circle at 50% 92%, rgba(${accentRgb}, 0.08) 0%, transparent 50%);
-      filter: blur(90px);
+        radial-gradient(circle at 18% 15%, rgba(${accentRgb}, 0.12) 0%, transparent 60%),
+        radial-gradient(circle at 82% 50%, rgba(145, 75, 40, 0.08) 0%, transparent 65%),
+        radial-gradient(circle at 50% 92%, rgba(${accentRgb}, 0.07) 0%, transparent 55%);
+      contain: strict;
       transition: opacity 0.4s ease;
     }
 
@@ -238,13 +238,12 @@ function generateNewTabHtml(palette, variantKey) {
       gap: 8px;
       padding: 5px 12px;
       border-radius: 20px;
-      background: rgba(var(--panel-rgb), 0.3);
+      background: rgba(var(--panel-rgb), 0.35);
       border: 1px solid var(--card-border);
       color: var(--text-secondary);
       font-size: 0.8rem;
       font-weight: 500;
       letter-spacing: 0.2px;
-      backdrop-filter: blur(16px);
       box-shadow: var(--card-bevel);
     }
 
@@ -276,9 +275,8 @@ function generateNewTabHtml(palette, variantKey) {
       color: var(--text-secondary);
       padding: 5px 14px;
       border-radius: 20px;
-      background: rgba(var(--panel-rgb), 0.3);
+      background: rgba(var(--panel-rgb), 0.35);
       border: 1px solid var(--card-border);
-      backdrop-filter: blur(14px);
       box-shadow: var(--card-bevel);
     }
 
@@ -298,7 +296,7 @@ function generateNewTabHtml(palette, variantKey) {
     }
 
     .icon-btn {
-      background: rgba(var(--panel-rgb), 0.3);
+      background: rgba(var(--panel-rgb), 0.35);
       border: 1px solid var(--card-border);
       color: var(--text-muted);
       width: 34px;
@@ -309,7 +307,6 @@ function generateNewTabHtml(palette, variantKey) {
       align-items: center;
       justify-content: center;
       transition: all 0.2s var(--spring-ease);
-      backdrop-filter: blur(14px);
       box-shadow: var(--card-bevel);
     }
 
@@ -343,8 +340,6 @@ function generateNewTabHtml(palette, variantKey) {
       display: flex;
       align-items: center;
       gap: 10px;
-      backdrop-filter: blur(28px) saturate(130%);
-      -webkit-backdrop-filter: blur(28px) saturate(130%);
       box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.38), var(--card-bevel);
       transition: all 0.22s var(--spring-ease);
     }
@@ -401,13 +396,11 @@ function generateNewTabHtml(palette, variantKey) {
       position: absolute;
       top: calc(100% + 8px);
       left: 0;
-      background: rgba(22, 18, 16, 0.95);
+      background: rgba(22, 18, 16, 0.98);
       border: 1px solid var(--accent-border);
       border-radius: 14px;
       padding: 6px;
       min-width: 180px;
-      backdrop-filter: blur(28px);
-      -webkit-backdrop-filter: blur(28px);
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.55), var(--card-bevel);
       z-index: 50;
       display: flex;
@@ -477,23 +470,24 @@ function generateNewTabHtml(palette, variantKey) {
     /* 3D Interactive Card Base */
     .card-3d {
       transform-style: preserve-3d;
-      transition: transform 0.22s var(--spring-ease), border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .card-3d:hover {
       will-change: transform;
     }
 
-    /* Section 1: Telemetry & AreaChart Visualizer (TALLER CARD) */
+    /* Section 1: Telemetry & AreaChart Visualizer (TALL STATURE 330px) */
     .telemetry-card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: var(--card-radius);
-      padding: 28px 32px;
-      min-height: 230px;
-      backdrop-filter: blur(var(--blur)) saturate(125%);
-      -webkit-backdrop-filter: blur(var(--blur)) saturate(125%);
+      padding: 34px 38px;
+      min-height: 330px;
       box-shadow: 0 16px 36px -10px rgba(0, 0, 0, calc(0.35 + 0.3 * var(--depth-factor))), var(--card-bevel);
       display: grid;
-      grid-template-columns: 290px 1fr;
-      gap: 36px;
+      grid-template-columns: 310px 1fr;
+      gap: 40px;
       align-items: center;
     }
 
@@ -514,9 +508,9 @@ function generateNewTabHtml(palette, variantKey) {
     .profile-pane {
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 22px;
       border-right: 1px solid rgba(255, 255, 255, 0.05);
-      padding-right: 32px;
+      padding-right: 36px;
     }
 
     @media (max-width: 920px) {
@@ -529,8 +523,8 @@ function generateNewTabHtml(palette, variantKey) {
     }
 
     .greeting-overline {
-      font-size: 0.76rem;
-      letter-spacing: 0.6px;
+      font-size: 0.78rem;
+      letter-spacing: 0.7px;
       text-transform: uppercase;
       color: var(--accent);
       font-weight: 600;
@@ -542,17 +536,17 @@ function generateNewTabHtml(palette, variantKey) {
     .profile-identity {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 18px;
     }
 
     .avatar-wrapper {
       position: relative;
-      width: 54px;
-      height: 54px;
+      width: 62px;
+      height: 62px;
       border-radius: 50%;
       flex-shrink: 0;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
     }
 
     .profile-avatar {
@@ -566,10 +560,10 @@ function generateNewTabHtml(palette, variantKey) {
 
     .avatar-dot {
       position: absolute;
-      bottom: 1px;
-      right: 1px;
-      width: 11px;
-      height: 11px;
+      bottom: 2px;
+      right: 2px;
+      width: 12px;
+      height: 12px;
       background: #4ade80;
       border: 2px solid #14110e;
       border-radius: 50%;
@@ -583,7 +577,7 @@ function generateNewTabHtml(palette, variantKey) {
     }
 
     .profile-display-name {
-      font-size: 1.25rem;
+      font-size: 1.35rem;
       font-weight: 700;
       color: var(--text-primary);
       letter-spacing: -0.3px;
@@ -594,7 +588,7 @@ function generateNewTabHtml(palette, variantKey) {
     }
 
     .profile-sub {
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       color: var(--text-secondary);
       display: flex;
       align-items: center;
@@ -609,14 +603,14 @@ function generateNewTabHtml(palette, variantKey) {
     .metric-strip {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      padding-top: 6px;
+      gap: 14px;
+      padding-top: 10px;
     }
 
     .metric-item {
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 4px;
     }
 
     .metric-label {
@@ -628,7 +622,7 @@ function generateNewTabHtml(palette, variantKey) {
     }
 
     .metric-value {
-      font-size: 1.15rem;
+      font-size: 1.25rem;
       font-weight: 600;
       color: var(--text-primary);
       line-height: 1;
@@ -638,11 +632,11 @@ function generateNewTabHtml(palette, variantKey) {
       color: var(--accent);
     }
 
-    /* Dedicated AreaChart Visualization (TALLER CHART) */
+    /* Dedicated AreaChart Visualization (TALL STATURE 190px) */
     .chart-pane {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 16px;
       width: 100%;
       min-width: 0;
     }
@@ -674,10 +668,10 @@ function generateNewTabHtml(palette, variantKey) {
       border: 1px solid rgba(255, 255, 255, 0.04);
     }
 
-    /* AreaChart Viewport */
+    /* AreaChart Viewport - Generous 190px Vertical Amplitude */
     .areachart-viewport {
       width: 100%;
-      height: 114px;
+      height: 190px;
       position: relative;
     }
 
@@ -710,7 +704,7 @@ function generateNewTabHtml(palette, variantKey) {
       stroke-width: 2.4;
       stroke-linecap: round;
       stroke-linejoin: round;
-      filter: drop-shadow(0 3px 10px rgba(var(--accent-rgb), 0.35));
+      filter: drop-shadow(0 4px 12px rgba(var(--accent-rgb), 0.35));
     }
 
     .chart-point-circle {
@@ -719,46 +713,31 @@ function generateNewTabHtml(palette, variantKey) {
     }
 
     .chart-point-circle:hover {
-      r: 5px;
+      r: 5.5px;
       fill: #ff8c53 !important;
     }
 
-    /* Radar Ping & Awaiting Pulse on Last Vertex */
+    /* Radar Ping & Awaiting Pulse on Last Vertex (Lightweight CSS Opacity Pulse) */
     .radar-pulse-ring {
-      transform-origin: center;
-      animation: radarExpand 2.2s infinite ease-out;
       pointer-events: none;
+      animation: radarPulse 2.4s ease-in-out infinite;
     }
 
-    @keyframes radarExpand {
-      0% {
-        r: 3.5;
+    @keyframes radarPulse {
+      0%, 100% {
         opacity: 0.9;
-        stroke-width: 2;
+        stroke-width: 2.2;
       }
-      70% {
-        r: 14;
-        opacity: 0;
-        stroke-width: 1;
-      }
-      100% {
-        r: 16;
-        opacity: 0;
-        stroke-width: 0;
+      50% {
+        opacity: 0.25;
+        stroke-width: 1.2;
       }
     }
 
     .awaiting-extension-line {
       stroke: var(--accent);
-      stroke-dasharray: 3 3;
-      stroke-opacity: 0.6;
-      animation: dashMove 1.5s linear infinite;
-    }
-
-    @keyframes dashMove {
-      to {
-        stroke-dashoffset: -12;
-      }
+      stroke-dasharray: 4 4;
+      stroke-opacity: 0.65;
     }
 
     /* AreaChart Tooltip */
@@ -868,13 +847,12 @@ function generateNewTabHtml(palette, variantKey) {
       font-weight: 500;
       font-family: var(--font-sans);
       color: var(--text-secondary);
-      background: rgba(var(--panel-rgb), 0.28);
+      background: rgba(var(--panel-rgb), 0.35);
       border: 1px solid var(--card-border);
       padding: 6px 12px;
       border-radius: 10px;
       cursor: pointer;
       transition: all 0.2s var(--spring-ease);
-      backdrop-filter: blur(12px);
       box-shadow: var(--card-bevel);
     }
 
@@ -902,8 +880,6 @@ function generateNewTabHtml(palette, variantKey) {
       display: flex;
       align-items: center;
       gap: 14px;
-      backdrop-filter: blur(var(--blur)) saturate(125%);
-      -webkit-backdrop-filter: blur(var(--blur)) saturate(125%);
       box-shadow: 0 10px 24px -6px rgba(0, 0, 0, calc(0.3 + 0.3 * var(--depth-factor))), var(--card-bevel);
       position: relative;
       overflow: hidden;
@@ -1008,8 +984,6 @@ function generateNewTabHtml(palette, variantKey) {
       border: 1px solid var(--card-border);
       border-radius: var(--card-radius);
       padding: 22px;
-      backdrop-filter: blur(var(--blur)) saturate(125%);
-      -webkit-backdrop-filter: blur(var(--blur)) saturate(125%);
       box-shadow: 0 14px 32px -8px rgba(0, 0, 0, calc(0.3 + 0.3 * var(--depth-factor))), var(--card-bevel);
       display: flex;
       flex-direction: column;
@@ -1306,15 +1280,13 @@ function generateNewTabHtml(palette, variantKey) {
     }
 
     .modal-sheet {
-      background: rgba(22, 18, 16, 0.94);
+      background: rgba(22, 18, 16, 0.96);
       border: 1px solid var(--accent-border);
       border-radius: var(--card-radius);
       padding: 26px;
       max-width: 480px;
       width: 100%;
       box-shadow: 0 24px 50px rgba(0, 0, 0, 0.6), var(--card-bevel);
-      backdrop-filter: blur(28px);
-      -webkit-backdrop-filter: blur(28px);
       display: flex;
       flex-direction: column;
       gap: 18px;
@@ -1584,19 +1556,20 @@ function generateNewTabHtml(palette, variantKey) {
         </div>
 
         <div class="areachart-viewport" id="areachartViewport">
-          <svg class="areachart-svg" id="areachartSvg" viewBox="0 0 600 114" preserveAspectRatio="none">
+          <svg class="areachart-svg" id="areachartSvg" viewBox="0 0 600 190" preserveAspectRatio="none">
             <defs>
               <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.38"></stop>
                 <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.0"></stop>
               </linearGradient>
             </defs>
-            <!-- Cartesian Reference Grid -->
-            <line x1="0" y1="24" x2="600" y2="24" class="chart-grid-line"></line>
-            <line x1="0" y1="58" x2="600" y2="58" class="chart-grid-line"></line>
-            <line x1="0" y1="92" x2="600" y2="92" class="chart-grid-line"></line>
+            <!-- Cartesian Reference Grid (Spanning 190px Stature) -->
+            <line x1="0" y1="36" x2="600" y2="36" class="chart-grid-line"></line>
+            <line x1="0" y1="80" x2="600" y2="80" class="chart-grid-line"></line>
+            <line x1="0" y1="124" x2="600" y2="124" class="chart-grid-line"></line>
+            <line x1="0" y1="168" x2="600" y2="168" class="chart-grid-line"></line>
             <!-- Tracking Crosshair Line -->
-            <line id="areachartCrosshair" x1="0" y1="0" x2="0" y2="114" class="areachart-crosshair"></line>
+            <line id="areachartCrosshair" x1="0" y1="0" x2="0" y2="190" class="areachart-crosshair"></line>
             <!-- Area & Path Elements -->
             <path id="areachartPathArea" class="areachart-path-area" d=""></path>
             <path id="areachartPathStroke" class="areachart-path-stroke" d=""></path>
@@ -1958,14 +1931,14 @@ function generateNewTabHtml(palette, variantKey) {
       if (!recent14 || recent14.length === 0) return;
 
       const width = 600;
-      const height = 114;
-      // Reserve rightmost 40px for the "awaiting" forward projection
+      const height = 190;
+      // Reserve rightmost 36px for the awaiting forward projection
       const chartWidth = width - 36;
       const stepX = chartWidth / (recent14.length - 1);
 
       const points = recent14.map((d, i) => {
         const x = i * stepX;
-        const y = height - (d.count > 0 ? (d.count / maxVal) * 82 : 6) - 10;
+        const y = height - (d.count > 0 ? (d.count / maxVal) * 144 : 8) - 16;
         return { x, y, data: d, isLast: i === recent14.length - 1 };
       });
 
@@ -2002,7 +1975,7 @@ function generateNewTabHtml(palette, variantKey) {
       const radarRing = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
       radarRing.setAttribute('cx', lastPt.x.toFixed(1));
       radarRing.setAttribute('cy', lastPt.y.toFixed(1));
-      radarRing.setAttribute('r', '4');
+      radarRing.setAttribute('r', '6');
       radarRing.setAttribute('fill', 'none');
       radarRing.setAttribute('stroke', 'var(--accent)');
       radarRing.setAttribute('class', 'radar-pulse-ring');
@@ -2440,7 +2413,7 @@ function generateNewTabHtml(palette, variantKey) {
       });
     }
 
-    // 8. 3D Perspective Tilt Physics
+    // 8. 3D Perspective Tilt Physics (Lightweight RAF & Cached Rect)
     let currentDepthFactor = 0.5;
 
     function bind3DCardTilt() {
@@ -2449,22 +2422,39 @@ function generateNewTabHtml(palette, variantKey) {
         if (card._tiltBound) return;
         card._tiltBound = true;
 
-        card.addEventListener('mousemove', (e) => {
-          if (currentDepthFactor <= 0.05) {
-            card.style.transform = 'translateY(-2px)';
-            return;
-          }
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left - rect.width / 2;
-          const y = e.clientY - rect.top - rect.height / 2;
-          const maxTilt = 7 * currentDepthFactor;
-          const rotX = -(y / (rect.height / 2)) * maxTilt;
-          const rotY = (x / (rect.width / 2)) * maxTilt;
+        let rect = null;
+        let rafId = null;
 
-          card.style.transform = \`perspective(1000px) rotateX(\${rotX.toFixed(2)}deg) rotateY(\${rotY.toFixed(2)}deg) translateY(-3px)\`;
+        card.addEventListener('mouseenter', () => {
+          if (currentDepthFactor <= 0.05) return;
+          rect = card.getBoundingClientRect();
+        });
+
+        card.addEventListener('mousemove', (e) => {
+          if (currentDepthFactor <= 0.05) return;
+          if (!rect) rect = card.getBoundingClientRect();
+          const clientX = e.clientX;
+          const clientY = e.clientY;
+
+          if (rafId) cancelAnimationFrame(rafId);
+          rafId = requestAnimationFrame(() => {
+            if (!rect) return;
+            const x = clientX - rect.left - rect.width / 2;
+            const y = clientY - rect.top - rect.height / 2;
+            const maxTilt = 6.5 * currentDepthFactor;
+            const rotX = -(y / (rect.height / 2)) * maxTilt;
+            const rotY = (x / (rect.width / 2)) * maxTilt;
+
+            card.style.transform = \`perspective(1000px) rotateX(\${rotX.toFixed(2)}deg) rotateY(\${rotY.toFixed(2)}deg) translateY(-2px)\`;
+          });
         });
 
         card.addEventListener('mouseleave', () => {
+          if (rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+          }
+          rect = null;
           card.style.transform = '';
         });
       });
