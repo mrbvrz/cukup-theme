@@ -16,6 +16,7 @@
     "build:telegram": "node build.js --target telegram",
     "build:t3code": "node build.js --target t3code",
     "build:herdr": "node build.js --target herdr",
+    "build:helium": "node build.js --target helium",
     "preview": "./print_colors.sh"
   },
   "keywords": [

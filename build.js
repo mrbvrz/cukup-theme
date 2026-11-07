@@ -31,6 +31,7 @@ const { generateTailwindPreset } = require('./templates/tailwind');
 const { generateTdesktopColors, generateTelegramMacosPalette, createSolidPng } = require('./templates/telegram');
 const { generateT3CodeJson, generateT3UnifiedThemeJson } = require('./templates/t3code');
 const { generateHerdrJson } = require('./templates/herdr');
+const { generateHeliumManifest, createThemeIcon } = require('./templates/helium');
 const { execSync } = require('child_process');
 
 // Paths
@@ -214,6 +215,64 @@ function buildHerdr(palettes) {
   }
 }
 
+function buildHelium(palettes) {
+  console.log('📦 [12/12] Building Helium browser themes...');
+  const outDir = path.join(DIST_DIR, 'helium');
+  ensureDir(outDir);
+
+  const heliumThemesDir = path.join(process.env.HOME || '', '.config', 'helium', 'themes');
+  ensureDir(heliumThemesDir);
+
+  const dotfilesHeliumThemesDir = path.join(process.env.HOME || '', '.dotfiles', 'helium', '.config', 'helium', 'themes');
+  const hasDotfiles = fs.existsSync(path.join(process.env.HOME || '', '.dotfiles'));
+  if (hasDotfiles) {
+    ensureDir(dotfilesHeliumThemesDir);
+  }
+
+  const heliumBin = '/Applications/Helium.app/Contents/MacOS/Helium';
+  const hasHeliumBin = fs.existsSync(heliumBin);
+
+  for (const [key, palette] of Object.entries(palettes)) {
+    const themeDistDir = path.join(outDir, `cukup-${key}`);
+    ensureDir(themeDistDir);
+
+    const manifestJson = generateHeliumManifest(palette, key);
+    fs.writeFileSync(path.join(themeDistDir, 'manifest.json'), manifestJson, 'utf8');
+
+    const iconPng = createThemeIcon(palette.surface.canvas, palette.text.accent);
+    fs.writeFileSync(path.join(themeDistDir, 'icon.png'), iconPng);
+
+    console.log(`   ✓ ${path.relative(__dirname, path.join(themeDistDir, 'manifest.json'))}`);
+
+    // Install to ~/.config/helium/themes/
+    const userThemeDir = path.join(heliumThemesDir, `cukup-${key}`);
+    ensureDir(userThemeDir);
+    fs.writeFileSync(path.join(userThemeDir, 'manifest.json'), manifestJson, 'utf8');
+    fs.writeFileSync(path.join(userThemeDir, 'icon.png'), iconPng);
+    console.log(`     -> Installed to ~/.config/helium/themes/cukup-${key}`);
+
+    // Install to ~/.dotfiles/helium/.config/helium/themes/
+    if (hasDotfiles) {
+      const dotfilesThemeDir = path.join(dotfilesHeliumThemesDir, `cukup-${key}`);
+      ensureDir(dotfilesThemeDir);
+      fs.writeFileSync(path.join(dotfilesThemeDir, 'manifest.json'), manifestJson, 'utf8');
+      fs.writeFileSync(path.join(dotfilesThemeDir, 'icon.png'), iconPng);
+    }
+
+    // Package .crx if Helium app exists
+    if (hasHeliumBin) {
+      try {
+        const keyFile = path.join(outDir, `cukup-${key}.pem`);
+        const keyFlag = fs.existsSync(keyFile) ? ` --pack-extension-key="${keyFile}"` : '';
+        execSync(`"${heliumBin}" --pack-extension="${themeDistDir}"${keyFlag} 2>/dev/null || true`);
+        console.log(`     -> Packaged CRX: dist/helium/cukup-${key}.crx`);
+      } catch (err) {
+        // ignore packaging error
+      }
+    }
+  }
+}
+
 function main() {
   const args = process.argv.slice(2);
   const targetIndex = args.indexOf('--target');
@@ -236,6 +295,7 @@ function main() {
   if (target === 'all' || target === 'telegram') buildTelegram(palettes);
   if (target === 'all' || target === 't3code' || target === 't3') buildT3Code(palettes);
   if (target === 'all' || target === 'herdr') buildHerdr(palettes);
+  if (target === 'all' || target === 'helium') buildHelium(palettes);
 
   console.log('\n✨ Build complete! Output directory: ./dist\n');
 }

@@ -53,7 +53,8 @@ dist/
 ├── tailwind/        # Tailwind CSS preset plugin (cukup-preset.js)
 ├── telegram/        # Telegram Desktop (.tdesktop-theme) & Telegram macOS (.palette)
 ├── t3code/          # T3 Code themes (single grouped cukup.json & variants)
-└── herdr/           # Herdr workspace themes (cukup-kopi.json, cukup-senja.json, etc.)
+├── herdr/           # Herdr workspace themes (cukup-kopi.json, cukup-senja.json, etc.)
+└── helium/          # Helium & Chromium browser themes (.crx & unpacked extensions)
 ```
 
 ---
@@ -106,6 +107,11 @@ Or import CSS variables in your web app:
 @import './dist/web/tokens.css';
 ```
 
+### 8. Helium / Chromium Browser
+1. Open `helium://extensions` (or `chrome://extensions`).
+2. Turn on **Developer mode** (top right switch).
+3. Click **Load unpacked** and select `~/.config/helium/themes/cukup-senja` (or drag and drop `dist/helium/cukup-senja.crx`).
+
 ---
 
 ## 🛠️ Design System Compiler
@@ -123,6 +129,7 @@ npm run build:kitty
 npm run build:zellij
 npm run build:web
 npm run build:tailwind
+npm run build:helium
 
 # Preview terminal color matrix
 ./print_colors.sh
