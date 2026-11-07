@@ -70,8 +70,15 @@ function generateHeliumManifest(palette, variantKey, blurred = false) {
     },
     chrome_url_overrides: {
       newtab: "newtab.html"
-    },
-    theme: {
+    }
+  };
+
+  // Only solid themes include the Chromium 'theme' block.
+  // Blurred (glass) variants use native Chromium Material You (user_color_theme_id)
+  // so WebUI settings retain vibrant Persimmon Orange without being wiped out,
+  // and native macOS NSVisualEffectView / glass-frame remain truly translucent.
+  if (!blurred) {
+    manifest.theme = {
       colors: {
         frame: frameColor,
         frame_inactive: frameInactiveColor,
@@ -93,8 +100,8 @@ function generateHeliumManifest(palette, variantKey, blurred = false) {
       properties: {
         ntp_logo_alternate: isDark ? 1 : 0
       }
-    }
-  };
+    };
+  }
 
   return JSON.stringify(manifest, null, 2);
 }
