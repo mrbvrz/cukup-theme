@@ -302,6 +302,7 @@ function buildHelium(palettes) {
     version: "1.0.0",
     description: "Minimalist ultra-translucent glass New Tab for Helium browser in Cukup design system",
     icons: { "128": "icon.png" },
+    permissions: ["bookmarks", "favicon"],
     chrome_url_overrides: { newtab: "newtab.html" }
   };
   const newtabManifestJson = JSON.stringify(newtabManifest, null, 2);

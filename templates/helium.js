@@ -68,6 +68,10 @@ function generateHeliumManifest(palette, variantKey, blurred = false) {
     icons: {
       "128": "icon.png"
     },
+    permissions: [
+      "bookmarks",
+      "favicon"
+    ],
     chrome_url_overrides: {
       newtab: "newtab.html"
     }
