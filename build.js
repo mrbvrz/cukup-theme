@@ -255,6 +255,9 @@ function buildHelium(palettes) {
       ensureDir(userThemeDir);
       fs.writeFileSync(path.join(userThemeDir, 'manifest.json'), manifestJson, 'utf8');
       fs.writeFileSync(path.join(userThemeDir, 'icon.png'), iconPng);
+      if (fs.existsSync(path.join(userThemeDir, 'Cached Theme.pak'))) {
+        fs.unlinkSync(path.join(userThemeDir, 'Cached Theme.pak'));
+      }
       console.log(`     -> Installed to ~/.config/helium/themes/${v.id}`);
 
       // Install to ~/.dotfiles/helium/.config/helium/themes/
@@ -263,6 +266,9 @@ function buildHelium(palettes) {
         ensureDir(dotfilesThemeDir);
         fs.writeFileSync(path.join(dotfilesThemeDir, 'manifest.json'), manifestJson, 'utf8');
         fs.writeFileSync(path.join(dotfilesThemeDir, 'icon.png'), iconPng);
+        if (fs.existsSync(path.join(dotfilesThemeDir, 'Cached Theme.pak'))) {
+          fs.unlinkSync(path.join(dotfilesThemeDir, 'Cached Theme.pak'));
+        }
       }
 
       // Package .crx if Helium app exists

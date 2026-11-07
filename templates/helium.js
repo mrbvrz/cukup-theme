@@ -5,27 +5,25 @@
  * =============================================================================
  * Helium is a private, fast, minimalist Chromium browser.
  * Generates unpacked Manifest V3 theme extensions and icons.
- * Supports both Solid and Blurred (Translucent) variants for macOS vibrancy.
+ * Supports both Solid and Blurred (Ultra-Translucent Glass) variants.
  * =============================================================================
  */
 
 const zlib = require('zlib');
 
-function hexToRgba(h, alphaOverride) {
+function hexToRgb(h) {
   if (!h) return [0, 0, 0];
-  const clean = h.replace('#', '');
-  const r = parseInt(clean.slice(0, 2), 16);
-  const g = parseInt(clean.slice(2, 4), 16);
-  const b = parseInt(clean.slice(4, 6), 16);
+  const clean = h.replace('#', '').slice(0, 6);
+  return [
+    parseInt(clean.slice(0, 2), 16),
+    parseInt(clean.slice(2, 4), 16),
+    parseInt(clean.slice(4, 6), 16)
+  ];
+}
 
-  if (alphaOverride !== undefined) {
-    return [r, g, b, alphaOverride];
-  }
-  if (clean.length === 8) {
-    const a = parseInt(clean.slice(6, 8), 16) / 255;
-    return [r, g, b, Math.round(a * 100) / 100];
-  }
-  return [r, g, b];
+function hexToRgba(h, alpha) {
+  const rgb = hexToRgb(h);
+  return [rgb[0], rgb[1], rgb[2], alpha !== undefined ? alpha : 1.0];
 }
 
 function generateHeliumManifest(palette, variantKey, blurred = false) {
@@ -36,32 +34,34 @@ function generateHeliumManifest(palette, variantKey, blurred = false) {
   const baseName = palette.name.replace('Cukup ', '');
   const themeName = blurred ? `Cukup ${baseName} (Blurred)` : `Cukup ${baseName}`;
   const themeDesc = blurred
-    ? `${palette.description || 'Cukup Theme for Helium'} — Translucent blurred vibrancy edition`
+    ? `${palette.description || 'Cukup Theme for Helium'} — Ultra-translucent glass edition for native macOS blur`
     : (palette.description || 'Cukup Theme for Helium and Chromium browsers');
 
+  // For blurred vibrancy, frame is near 0 for full native frosted glass blur,
+  // and toolbar is a subtle 15% glass sheen for contrast and structure.
   const frameColor = blurred
-    ? hexToRgba(s.tabBar || s.panel, 0.05)
-    : hexToRgba(s.tabBar || s.panel);
+    ? hexToRgba(s.tabBar || s.panel, 0.0)
+    : hexToRgb(s.tabBar || s.panel);
 
   const frameInactiveColor = blurred
-    ? hexToRgba(s.panel, 0.1)
-    : hexToRgba(s.panel);
+    ? hexToRgba(s.panel, 0.05)
+    : hexToRgb(s.panel);
 
   const toolbarColor = blurred
-    ? hexToRgba(s.toolbar || s.surface, 0.2)
-    : hexToRgba(s.toolbar || s.surface);
+    ? hexToRgba(s.toolbar || s.surface, 0.15)
+    : hexToRgb(s.toolbar || s.surface);
 
   const omniboxBgColor = blurred
-    ? hexToRgba(s.panel, 0.28)
-    : hexToRgba(s.panel);
+    ? hexToRgba(s.panel, 0.22)
+    : hexToRgb(s.panel);
 
   const ntpBgColor = blurred
-    ? hexToRgba(s.canvas, 0.35)
-    : hexToRgba(s.canvas);
+    ? hexToRgba(s.canvas, 0.25)
+    : hexToRgb(s.canvas);
 
   const manifest = {
     manifest_version: 3,
-    version: '1.1.0',
+    version: '1.2.0',
     name: themeName,
     description: themeDesc,
     icons: {
@@ -74,17 +74,17 @@ function generateHeliumManifest(palette, variantKey, blurred = false) {
         frame_incognito: frameColor,
         frame_incognito_inactive: frameInactiveColor,
         toolbar: toolbarColor,
-        toolbar_button_icon: hexToRgba(t.primary),
-        toolbar_button_icon_inactive: hexToRgba(t.muted),
-        tab_text: hexToRgba(t.primary),
-        tab_background_text: hexToRgba(t.muted),
-        tab_background_text_inactive: hexToRgba(t.disabled || t.muted),
-        bookmark_text: hexToRgba(t.primary),
+        toolbar_button_icon: hexToRgb(t.primary),
+        toolbar_button_icon_inactive: hexToRgb(t.muted),
+        tab_text: hexToRgb(t.primary),
+        tab_background_text: hexToRgb(t.muted),
+        tab_background_text_inactive: hexToRgb(t.muted),
+        bookmark_text: hexToRgb(t.primary),
         omnibox_background: omniboxBgColor,
-        omnibox_text: hexToRgba(t.primary),
+        omnibox_text: hexToRgb(t.primary),
         ntp_background: ntpBgColor,
-        ntp_text: hexToRgba(t.primary),
-        ntp_link: hexToRgba(t.accent)
+        ntp_text: hexToRgb(t.primary),
+        ntp_link: hexToRgb(t.accent)
       },
       properties: {
         ntp_logo_alternate: isDark ? 1 : 0
@@ -98,8 +98,8 @@ function generateHeliumManifest(palette, variantKey, blurred = false) {
 function createThemeIcon(bgHex, accentHex) {
   const width = 128;
   const height = 128;
-  const bg = hexToRgba(bgHex);
-  const fg = hexToRgba(accentHex);
+  const bg = hexToRgb(bgHex);
+  const fg = hexToRgb(accentHex);
 
   const rawData = Buffer.alloc(height * (1 + width * 4));
   let offset = 0;
