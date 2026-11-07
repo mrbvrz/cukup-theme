@@ -289,6 +289,41 @@ function buildHelium(palettes) {
       }
     }
   }
+
+  // 3. Build standalone dedicated Cukup New Tab extension
+  const newtabExtDir = path.join(outDir, 'cukup-newtab');
+  ensureDir(newtabExtDir);
+  const userNewtabDir = path.join(heliumThemesDir, 'cukup-newtab');
+  ensureDir(userNewtabDir);
+
+  const newtabManifest = {
+    manifest_version: 3,
+    name: "Cukup New Tab (Glass)",
+    version: "1.0.0",
+    description: "Minimalist ultra-translucent glass New Tab for Helium browser in Cukup design system",
+    icons: { "128": "icon.png" },
+    chrome_url_overrides: { newtab: "newtab.html" }
+  };
+  const newtabManifestJson = JSON.stringify(newtabManifest, null, 2);
+  const defaultNewTabHtml = generateNewTabHtml(palettes.kopi, 'kopi');
+  const defaultIcon = createThemeIcon(palettes.kopi.surface.canvas, palettes.kopi.text.accent);
+
+  fs.writeFileSync(path.join(newtabExtDir, 'manifest.json'), newtabManifestJson, 'utf8');
+  fs.writeFileSync(path.join(newtabExtDir, 'newtab.html'), defaultNewTabHtml, 'utf8');
+  fs.writeFileSync(path.join(newtabExtDir, 'icon.png'), defaultIcon);
+
+  fs.writeFileSync(path.join(userNewtabDir, 'manifest.json'), newtabManifestJson, 'utf8');
+  fs.writeFileSync(path.join(userNewtabDir, 'newtab.html'), defaultNewTabHtml, 'utf8');
+  fs.writeFileSync(path.join(userNewtabDir, 'icon.png'), defaultIcon);
+
+  if (hasDotfiles) {
+    const dotfilesNewTabDir = path.join(dotfilesHeliumThemesDir, 'cukup-newtab');
+    ensureDir(dotfilesNewTabDir);
+    fs.writeFileSync(path.join(dotfilesNewTabDir, 'manifest.json'), newtabManifestJson, 'utf8');
+    fs.writeFileSync(path.join(dotfilesNewTabDir, 'newtab.html'), defaultNewTabHtml, 'utf8');
+    fs.writeFileSync(path.join(dotfilesNewTabDir, 'icon.png'), defaultIcon);
+  }
+  console.log(`   ✓ ${path.relative(__dirname, path.join(newtabExtDir, 'manifest.json'))} (Dedicated New Tab Extension)`);
 }
 
 function main() {

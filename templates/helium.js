@@ -78,7 +78,7 @@ function generateHeliumManifest(palette, variantKey, blurred = false) {
         frame_incognito: frameColor,
         frame_incognito_inactive: frameInactiveColor,
         toolbar: toolbarColor,
-        toolbar_button_icon: hexToRgb(t.primary),
+        toolbar_button_icon: hexToRgb(t.accent),
         toolbar_button_icon_inactive: hexToRgb(t.muted),
         tab_text: hexToRgb(t.primary),
         tab_background_text: hexToRgb(t.muted),
