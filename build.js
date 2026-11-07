@@ -233,41 +233,48 @@ function buildHelium(palettes) {
   const hasHeliumBin = fs.existsSync(heliumBin);
 
   for (const [key, palette] of Object.entries(palettes)) {
-    const themeDistDir = path.join(outDir, `cukup-${key}`);
-    ensureDir(themeDistDir);
+    const variants = [
+      { id: `cukup-${key}`, blurred: false },
+      { id: `cukup-${key}-blurred`, blurred: true }
+    ];
 
-    const manifestJson = generateHeliumManifest(palette, key);
-    fs.writeFileSync(path.join(themeDistDir, 'manifest.json'), manifestJson, 'utf8');
+    for (const v of variants) {
+      const themeDistDir = path.join(outDir, v.id);
+      ensureDir(themeDistDir);
 
-    const iconPng = createThemeIcon(palette.surface.canvas, palette.text.accent);
-    fs.writeFileSync(path.join(themeDistDir, 'icon.png'), iconPng);
+      const manifestJson = generateHeliumManifest(palette, key, v.blurred);
+      fs.writeFileSync(path.join(themeDistDir, 'manifest.json'), manifestJson, 'utf8');
 
-    console.log(`   ✓ ${path.relative(__dirname, path.join(themeDistDir, 'manifest.json'))}`);
+      const iconPng = createThemeIcon(palette.surface.canvas, palette.text.accent);
+      fs.writeFileSync(path.join(themeDistDir, 'icon.png'), iconPng);
 
-    // Install to ~/.config/helium/themes/
-    const userThemeDir = path.join(heliumThemesDir, `cukup-${key}`);
-    ensureDir(userThemeDir);
-    fs.writeFileSync(path.join(userThemeDir, 'manifest.json'), manifestJson, 'utf8');
-    fs.writeFileSync(path.join(userThemeDir, 'icon.png'), iconPng);
-    console.log(`     -> Installed to ~/.config/helium/themes/cukup-${key}`);
+      console.log(`   ✓ ${path.relative(__dirname, path.join(themeDistDir, 'manifest.json'))}`);
 
-    // Install to ~/.dotfiles/helium/.config/helium/themes/
-    if (hasDotfiles) {
-      const dotfilesThemeDir = path.join(dotfilesHeliumThemesDir, `cukup-${key}`);
-      ensureDir(dotfilesThemeDir);
-      fs.writeFileSync(path.join(dotfilesThemeDir, 'manifest.json'), manifestJson, 'utf8');
-      fs.writeFileSync(path.join(dotfilesThemeDir, 'icon.png'), iconPng);
-    }
+      // Install to ~/.config/helium/themes/
+      const userThemeDir = path.join(heliumThemesDir, v.id);
+      ensureDir(userThemeDir);
+      fs.writeFileSync(path.join(userThemeDir, 'manifest.json'), manifestJson, 'utf8');
+      fs.writeFileSync(path.join(userThemeDir, 'icon.png'), iconPng);
+      console.log(`     -> Installed to ~/.config/helium/themes/${v.id}`);
 
-    // Package .crx if Helium app exists
-    if (hasHeliumBin) {
-      try {
-        const keyFile = path.join(outDir, `cukup-${key}.pem`);
-        const keyFlag = fs.existsSync(keyFile) ? ` --pack-extension-key="${keyFile}"` : '';
-        execSync(`"${heliumBin}" --pack-extension="${themeDistDir}"${keyFlag} 2>/dev/null || true`);
-        console.log(`     -> Packaged CRX: dist/helium/cukup-${key}.crx`);
-      } catch (err) {
-        // ignore packaging error
+      // Install to ~/.dotfiles/helium/.config/helium/themes/
+      if (hasDotfiles) {
+        const dotfilesThemeDir = path.join(dotfilesHeliumThemesDir, v.id);
+        ensureDir(dotfilesThemeDir);
+        fs.writeFileSync(path.join(dotfilesThemeDir, 'manifest.json'), manifestJson, 'utf8');
+        fs.writeFileSync(path.join(dotfilesThemeDir, 'icon.png'), iconPng);
+      }
+
+      // Package .crx if Helium app exists
+      if (hasHeliumBin) {
+        try {
+          const keyFile = path.join(outDir, `${v.id}.pem`);
+          const keyFlag = fs.existsSync(keyFile) ? ` --pack-extension-key="${keyFile}"` : '';
+          execSync(`"${heliumBin}" --pack-extension="${themeDistDir}"${keyFlag} 2>/dev/null || true`);
+          console.log(`     -> Packaged CRX: dist/helium/${v.id}.crx`);
+        } catch (err) {
+          // ignore packaging error
+        }
       }
     }
   }
