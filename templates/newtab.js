@@ -572,7 +572,7 @@ function generateNewTabHtml(palette, variantKey) {
     .profile-names {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
       overflow: hidden;
     }
 
@@ -587,17 +587,40 @@ function generateNewTabHtml(palette, variantKey) {
       line-height: 1.2;
     }
 
-    .profile-sub {
-      font-size: 0.82rem;
-      color: var(--text-secondary);
+    .profile-handle-row {
       display: flex;
       align-items: center;
       gap: 6px;
     }
 
-    .profile-sub a {
+    .profile-handle {
+      font-size: 0.84rem;
       color: var(--accent);
       text-decoration: none;
+      font-weight: 500;
+      transition: color 0.15s ease;
+      display: inline-block;
+    }
+
+    .profile-handle:hover {
+      color: var(--accent-hover);
+      text-decoration: underline;
+    }
+
+    .profile-repos-line {
+      font-size: 0.76rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 1px;
+    }
+
+    .profile-repos-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--text-secondary);
     }
 
     .metric-strip {
@@ -768,6 +791,36 @@ function generateNewTabHtml(palette, variantKey) {
       padding-top: 8px;
     }
 
+    .status-summary-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .status-circle-dot {
+      width: 7.5px;
+      height: 7.5px;
+      min-width: 7.5px;
+      min-height: 7.5px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 6px rgba(var(--accent-rgb), 0.75);
+      display: inline-block;
+      flex-shrink: 0;
+      animation: statusDotPulse 2.2s infinite ease-in-out;
+    }
+
+    @keyframes statusDotPulse {
+      0%, 100% { opacity: 0.95; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.9); }
+    }
+
     .chart-summary-line span b {
       color: var(--text-secondary);
       font-weight: 500;
@@ -775,7 +828,6 @@ function generateNewTabHtml(palette, variantKey) {
 
     .awaiting-pill {
       color: var(--accent);
-      animation: gentle-pulse 2s infinite ease-in-out;
     }
 
     /* Section 2: Bookmarks Dock (Enhanced Hallmark Cards) */
@@ -1066,7 +1118,6 @@ function generateNewTabHtml(palette, variantKey) {
     .news-item:hover {
       background: rgba(var(--panel-rgb), 0.65);
       border-color: rgba(255, 255, 255, 0.08);
-      transform: translateX(2px);
     }
 
     .news-badge-col {
@@ -1153,7 +1204,6 @@ function generateNewTabHtml(palette, variantKey) {
     .yt-card:hover {
       background: rgba(var(--panel-rgb), 0.65);
       border-color: rgba(255, 255, 255, 0.09);
-      transform: translateY(-2px);
     }
 
     .yt-thumb-box {
@@ -1173,7 +1223,7 @@ function generateNewTabHtml(palette, variantKey) {
     }
 
     .yt-card:hover .yt-thumb-img {
-      transform: scale(1.04);
+      opacity: 0.95;
     }
 
     .yt-duration {
@@ -1519,10 +1569,17 @@ function generateNewTabHtml(palette, variantKey) {
           </div>
           <div class="profile-names">
             <h1 class="profile-display-name" id="profileDisplayName">Hasan Suryaman</h1>
-            <div class="profile-sub mono">
-              <a href="https://github.com/mrbvrz" target="_blank" id="profileHandle">@mrbvrz</a>
-              <span>·</span>
-              <span id="profileBio">Developer</span>
+            <div class="profile-handle-row mono">
+              <a href="https://github.com/mrbvrz" target="_blank" id="profileHandle" class="profile-handle">@mrbvrz</a>
+            </div>
+            <div class="profile-repos-line mono">
+              <span id="profileBio" class="profile-repos-badge">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.75">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+                <span>Repositories</span>
+              </span>
             </div>
           </div>
         </div>
@@ -1556,7 +1613,7 @@ function generateNewTabHtml(palette, variantKey) {
         </div>
 
         <div class="areachart-viewport" id="areachartViewport">
-          <svg class="areachart-svg" id="areachartSvg" viewBox="0 0 600 190" preserveAspectRatio="none">
+          <svg class="areachart-svg" id="areachartSvg" viewBox="0 0 600 190">
             <defs>
               <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.38"></stop>
@@ -1584,7 +1641,13 @@ function generateNewTabHtml(palette, variantKey) {
         </div>
 
         <div class="chart-summary-line mono">
-          <span>Status: <b id="awaitingStatusPill" class="awaiting-pill">● Awaiting today's commits</b></span>
+          <span class="status-summary-item">
+            <span>Status:</span>
+            <span class="status-pill-badge">
+              <span class="status-circle-dot"></span>
+              <b id="awaitingStatusPill" class="awaiting-pill">Awaiting today's commits</b>
+            </span>
+          </span>
           <span>14D Peak: <b id="peakVal">-</b></span>
         </div>
       </div>
@@ -1617,7 +1680,7 @@ function generateNewTabHtml(palette, variantKey) {
     <!-- Section 3: Dual Developer Feeds (Expanded Hacker News + Dev.to) -->
     <section class="feeds-row motion-enter delay-3">
       <!-- Live Hacker News & Dev.to Tech Feed -->
-      <div class="feed-panel card-3d">
+      <div class="feed-panel">
         <div class="feed-header">
           <div class="feed-title">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1641,7 +1704,7 @@ function generateNewTabHtml(palette, variantKey) {
       </div>
 
       <!-- YouTube Developer Updates -->
-      <div class="feed-panel card-3d">
+      <div class="feed-panel">
         <div class="feed-header">
           <div class="feed-title">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -1913,7 +1976,7 @@ function generateNewTabHtml(palette, variantKey) {
     }
 
     // 2. AreaChart Engine with Awaiting Pulse & Anticipation Beacon
-    let lastContributionsData = [];
+    let lastContributionsData = null;
 
     function renderAreaChart(recent14, peakVal, maxVal) {
       const pathArea = document.getElementById('areachartPathArea');
@@ -1924,14 +1987,22 @@ function generateNewTabHtml(palette, variantKey) {
       const crosshair = document.getElementById('areachartCrosshair');
       const tooltip = document.getElementById('areachartTooltip');
       const viewport = document.getElementById('areachartViewport');
+      const svg = document.getElementById('areachartSvg');
 
       verticesGroup.innerHTML = '';
       beaconGroup.innerHTML = '';
 
       if (!recent14 || recent14.length === 0) return;
 
-      const width = 600;
+      const width = viewport.clientWidth || 600;
       const height = 190;
+      svg.setAttribute('viewBox', \`0 0 \${width} \${height}\`);
+
+      // Ensure grid lines span full dynamic width
+      document.querySelectorAll('.chart-grid-line').forEach(line => {
+        line.setAttribute('x2', width.toString());
+      });
+
       // Reserve rightmost 36px for the awaiting forward projection
       const chartWidth = width - 36;
       const stepX = chartWidth / (recent14.length - 1);
@@ -1971,22 +2042,22 @@ function generateNewTabHtml(palette, variantKey) {
       extLine.setAttribute('y2', lastPt.y.toFixed(1));
       extLine.style.display = 'block';
 
-      // Render Radar Ping Beacon on the final point (Awaiting Commits)
+      // Render Radar Ping Beacon on the final point (Awaiting Commits - Perfectly Round)
       const radarRing = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
       radarRing.setAttribute('cx', lastPt.x.toFixed(1));
       radarRing.setAttribute('cy', lastPt.y.toFixed(1));
-      radarRing.setAttribute('r', '6');
+      radarRing.setAttribute('r', '7');
       radarRing.setAttribute('fill', 'none');
       radarRing.setAttribute('stroke', 'var(--accent)');
       radarRing.setAttribute('class', 'radar-pulse-ring');
       beaconGroup.appendChild(radarRing);
 
-      // Render Vertex Circles
+      // Render Vertex Circles (Strict 1:1 Pixel Circles)
       points.forEach(pt => {
         const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
         circle.setAttribute('cx', pt.x.toFixed(1));
         circle.setAttribute('cy', pt.y.toFixed(1));
-        circle.setAttribute('r', pt.isLast ? '4.5' : (pt.data.count > 0 ? '3.5' : '2'));
+        circle.setAttribute('r', pt.isLast ? '5' : (pt.data.count > 0 ? '3.5' : '2.2'));
         circle.setAttribute('fill', pt.isLast ? '#ff8c53' : (pt.data.count > 0 ? 'var(--accent)' : 'rgba(255,255,255,0.12)'));
         circle.setAttribute('stroke', '#161311');
         circle.setAttribute('stroke-width', pt.isLast ? '2' : '1.5');
@@ -2015,6 +2086,12 @@ function generateNewTabHtml(palette, variantKey) {
         verticesGroup.appendChild(circle);
       });
     }
+
+    window.addEventListener('resize', () => {
+      if (lastContributionsData && lastContributionsData.recent14) {
+        renderAreaChart(lastContributionsData.recent14, lastContributionsData.peak, lastContributionsData.maxVal);
+      }
+    });
 
     // 3. GitHub Profile & Telemetry Fetcher
     async function loadGitHubData(username) {
@@ -2057,7 +2134,14 @@ function generateNewTabHtml(palette, variantKey) {
         if (data.user) {
           avatarEl.src = data.user.avatar_url || avatarEl.src;
           const loc = data.user.location ? ' · ' + data.user.location : '';
-          bioEl.textContent = (data.user.public_repos || 0) + ' repos' + loc;
+          const repoCount = data.user.public_repos !== undefined ? data.user.public_repos : 0;
+          bioEl.innerHTML = \`
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.75">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <span>\${repoCount} \${repoCount === 1 ? 'repository' : 'repositories'}\${loc}</span>
+          \`;
           if (data.user.name) {
             displayName = data.user.name;
           }
@@ -2097,7 +2181,11 @@ function generateNewTabHtml(palette, variantKey) {
           avgEl.textContent = avg14 + '/d';
           peakEl.textContent = peak + ' commits';
 
-          statusPill.textContent = '● Today: ' + todayCount + ' commits (awaiting updates)';
+          if (todayCount > 0) {
+            statusPill.textContent = \`Today: \${todayCount} \${todayCount === 1 ? 'commit' : 'commits'} (In Progress)\`;
+          } else {
+            statusPill.textContent = "Awaiting today's updates";
+          }
 
           lastContributionsData = { recent14, peak, maxVal };
           renderAreaChart(recent14, peak, maxVal);
