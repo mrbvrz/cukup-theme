@@ -1246,45 +1246,47 @@ function generateNewTabHtml(palette, variantKey) {
       color: var(--accent);
     }
 
-    .news-source-tabs {
-      display: flex;
-      gap: 4px;
-      background: rgba(255, 255, 255, 0.03);
-      padding: 2px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-    }
-
-    .news-tab-btn {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-size: 0.68rem;
+    .feed-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: #34d399;
+      background: rgba(52, 211, 153, 0.08);
+      border: 1px solid rgba(52, 211, 153, 0.18);
       padding: 2px 7px;
       border-radius: 6px;
-      cursor: pointer;
-      font-family: var(--font-mono);
-      transition: all 0.15s ease;
+      letter-spacing: 0.5px;
     }
 
-    .news-tab-btn.active {
-      color: var(--text-primary);
-      background: rgba(255, 255, 255, 0.08);
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 8px #34d399;
+      animation: livePulse 2s infinite ease-in-out;
+    }
+
+    @keyframes livePulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
     }
 
     .news-scroll-container {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
       overflow-y: auto;
       padding-right: 4px;
     }
 
     .news-item {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       gap: 12px;
-      padding: 10px 12px;
+      padding: 8px 10px;
       border-radius: 12px;
       text-decoration: none;
       background: rgba(255, 255, 255, 0.02);
@@ -1295,55 +1297,64 @@ function generateNewTabHtml(palette, variantKey) {
     .news-item:hover {
       background: rgba(var(--panel-rgb), 0.65);
       border-color: rgba(255, 255, 255, 0.08);
+      transform: translateY(-1px);
     }
 
-    .news-badge-col {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
+    .news-thumb-box {
+      position: relative;
+      width: 90px;
+      height: 60px;
+      border-radius: 8px;
+      overflow: hidden;
       flex-shrink: 0;
+      background: #141110;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
     }
 
-    .news-source-tag {
-      font-size: 0.58rem;
-      padding: 2px 5px;
+    .news-thumb-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .news-item:hover .news-thumb-img {
+      transform: scale(1.06);
+    }
+
+    .news-thumb-box .news-source-tag {
+      position: absolute;
+      bottom: 3px;
+      left: 3px;
+      font-size: 0.54rem;
+      padding: 1px 5px;
       border-radius: 4px;
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text-muted);
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(4px);
       text-transform: uppercase;
       font-weight: 600;
       letter-spacing: 0.3px;
     }
 
-    .news-source-tag.hn { color: #ff6600; background: rgba(255, 102, 0, 0.12); }
-    .news-source-tag.dev { color: #a78bfa; background: rgba(167, 139, 250, 0.12); }
-    .news-source-tag.verge { color: #f43f5e; background: rgba(244, 63, 94, 0.12); }
-    .news-source-tag.android { color: #3ddc84; background: rgba(61, 220, 132, 0.12); }
-
-    .news-score {
-      font-size: 0.72rem;
-      color: var(--accent);
-      background: var(--accent-soft);
-      padding: 3px 6px;
-      border-radius: 6px;
-      min-width: 44px;
-      text-align: center;
-    }
+    .news-source-tag.hn { color: #ff6600; }
+    .news-source-tag.dev { color: #a78bfa; }
+    .news-source-tag.verge { color: #f43f5e; }
+    .news-source-tag.android { color: #3ddc84; }
 
     .news-content {
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 4px;
       overflow: hidden;
       min-width: 0;
+      flex: 1;
     }
 
     .news-headline {
       font-size: 0.82rem;
       font-weight: 500;
       color: var(--text-primary);
-      line-height: 1.3;
+      line-height: 1.35;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
@@ -1356,6 +1367,14 @@ function generateNewTabHtml(palette, variantKey) {
       gap: 8px;
       font-size: 0.68rem;
       color: var(--text-muted);
+    }
+
+    .news-score-badge {
+      color: var(--accent);
+      background: var(--accent-soft);
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 0.65rem;
     }
 
     /* YouTube Updates Grid */
@@ -2125,12 +2144,9 @@ function generateNewTabHtml(palette, variantKey) {
             <span>Tech & Engineering Pulse</span>
           </div>
 
-          <div class="news-source-tabs" id="newsSourceTabs">
-            <button class="news-tab-btn active" data-source="all">All</button>
-            <button class="news-tab-btn" data-source="hn">HN</button>
-            <button class="news-tab-btn" data-source="dev">DEV</button>
-            <button class="news-tab-btn" data-source="verge">The Verge</button>
-            <button class="news-tab-btn" data-source="android">Android</button>
+          <div class="feed-live-badge mono">
+            <span class="live-dot"></span>
+            <span>LIVE</span>
           </div>
         </div>
 
@@ -2352,8 +2368,8 @@ function generateNewTabHtml(palette, variantKey) {
   </div>
 
   <script>
-    // Automatic Cache Cleaner & Reset (Version v8_real_favicons)
-    const CACHE_VERSION = 'v8_real_favicons';
+    // Automatic Cache Cleaner & Reset (Version v9_news_card_images)
+    const CACHE_VERSION = 'v9_news_card_images';
     if (localStorage.getItem('cukup_cache_version') !== CACHE_VERSION) {
       const savedWp = localStorage.getItem('cukup_wallpaper');
       const savedRadius = localStorage.getItem('cukup_card_radius');
@@ -3114,35 +3130,142 @@ function generateNewTabHtml(palette, variantKey) {
       }
     });
 
-    // 6. Multi-Source Developer Tech Feed (HN, DEV, The Verge, Android)
-    let currentNewsSource = 'all';
+    // 6. Multi-Source Developer Tech Feed with Card Images
     let cachedAllNews = [];
 
+    function getTechCoverImage(title, domain) {
+      const t = (title || '').toLowerCase();
+      if (t.includes('ai') || t.includes('gpt') || t.includes('llm') || t.includes('model') || t.includes('neural') || t.includes('intelligence')) {
+        return 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&auto=format&fit=crop&q=80';
+      }
+      if (t.includes('linux') || t.includes('rust') || t.includes('kernel') || t.includes('hardware') || t.includes('cpu') || t.includes('chip') || t.includes('risc')) {
+        return 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&auto=format&fit=crop&q=80';
+      }
+      if (t.includes('web') || t.includes('js') || t.includes('react') || t.includes('css') || t.includes('html') || t.includes('frontend')) {
+        return 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=400&auto=format&fit=crop&q=80';
+      }
+      if (t.includes('security') || t.includes('hack') || t.includes('auth') || t.includes('crypto')) {
+        return 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&auto=format&fit=crop&q=80';
+      }
+      if (t.includes('android') || t.includes('mobile') || t.includes('phone') || t.includes('pixel')) {
+        return 'https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?w=400&auto=format&fit=crop&q=80';
+      }
+      return 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&auto=format&fit=crop&q=80';
+    }
+
     const FALLBACK_NEWS = [
-      { id: 'hn_1', source: 'HN', sourceClass: 'hn', title: 'The $8 Linux Computer: Minimalist RISC-V Hardware', url: 'https://news.ycombinator.com', score: '▲ 142', by: 'antirez', comments: 48, domain: 'blogspot.com' },
-      { id: 'dev_1', source: 'DEV', sourceClass: 'dev', title: 'Why 50 Years of Senior Craft Lives in Context, Not Code', url: 'https://dev.to', score: '❤️ 89', by: 'Randal Schwartz', comments: 24, domain: 'dev.to' },
-      { id: 'verge_1', source: 'The Verge', sourceClass: 'verge', title: 'Next-gen silicon architectures push boundaries of consumer computing', url: 'https://theverge.com/tech', score: '⚡ Tech', by: 'Verge Staff', comments: 31, domain: 'theverge.com' },
-      { id: 'android_1', source: 'Android', sourceClass: 'android', title: 'Android 16 Developer Preview: Predictive Back, Architecture & APIs', url: 'https://developer.android.com', score: '⚡ Android', by: 'Android Devs', comments: 45, domain: 'android.com' },
-      { id: 'hn_2', source: 'HN', sourceClass: 'hn', title: 'SQLite in the Browser with WebAssembly & OPFS', url: 'https://news.ycombinator.com', score: '▲ 285', by: 'drh', comments: 92, domain: 'sqlite.org' },
-      { id: 'dev_2', source: 'DEV', sourceClass: 'dev', title: 'Building Resilient Micro-Frontends in 2026', url: 'https://dev.to', score: '❤️ 142', by: 'Sarah Dayan', comments: 38, domain: 'dev.to' },
-      { id: 'verge_2', source: 'The Verge', sourceClass: 'verge', title: 'Open-weights AI models challenge proprietary benchmarks in real tests', url: 'https://theverge.com/ai', score: '⚡ AI', by: 'The Verge', comments: 64, domain: 'theverge.com' },
-      { id: 'android_2', source: 'Android', sourceClass: 'android', title: 'Jetpack Compose performance optimizations for 120Hz micro-interactions', url: 'https://android-developers.googleblog.com', score: '⚡ Kotlin', by: 'Android Team', comments: 28, domain: 'googleblog.com' }
+      {
+        id: 'hn_1',
+        source: 'HN',
+        sourceClass: 'hn',
+        title: 'The $8 Linux Computer: Minimalist RISC-V Hardware',
+        url: 'https://news.ycombinator.com',
+        image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&auto=format&fit=crop&q=80',
+        score: '▲ 142',
+        by: 'antirez',
+        comments: 48,
+        domain: 'blogspot.com'
+      },
+      {
+        id: 'dev_1',
+        source: 'DEV',
+        sourceClass: 'dev',
+        title: 'Why 50 Years of Senior Craft Lives in Context, Not Code',
+        url: 'https://dev.to',
+        image: 'https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fmc7bd0mpw7k0aq4vsqj4.jpg',
+        score: '❤️ 89',
+        by: 'Randal Schwartz',
+        comments: 24,
+        domain: 'dev.to'
+      },
+      {
+        id: 'verge_1',
+        source: 'The Verge',
+        sourceClass: 'verge',
+        title: 'Next-gen silicon architectures push boundaries of consumer computing',
+        url: 'https://theverge.com/tech',
+        image: 'https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/268829_The90_Gem_SVasani_0002.jpg',
+        score: '⚡ Tech',
+        by: 'Verge Staff',
+        comments: 31,
+        domain: 'theverge.com'
+      },
+      {
+        id: 'android_1',
+        source: 'Android',
+        sourceClass: 'android',
+        title: 'Android 16 Developer Preview: Predictive Back, Architecture & APIs',
+        url: 'https://developer.android.com',
+        image: 'https://static0.anpoimages.com/wordpress/wp-content/uploads/wm/2026/11/nothing-phone-color-black-on-top-of-wooden-table.jpeg',
+        score: '⚡ Android',
+        by: 'Android Devs',
+        comments: 45,
+        domain: 'android.com'
+      },
+      {
+        id: 'hn_2',
+        source: 'HN',
+        sourceClass: 'hn',
+        title: 'SQLite in the Browser with WebAssembly & OPFS',
+        url: 'https://news.ycombinator.com',
+        image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&auto=format&fit=crop&q=80',
+        score: '▲ 285',
+        by: 'drh',
+        comments: 92,
+        domain: 'sqlite.org'
+      },
+      {
+        id: 'dev_2',
+        source: 'DEV',
+        sourceClass: 'dev',
+        title: 'Building Resilient Micro-Frontends in 2026',
+        url: 'https://dev.to',
+        image: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=400&auto=format&fit=crop&q=80',
+        score: '❤️ 142',
+        by: 'Sarah Dayan',
+        comments: 38,
+        domain: 'dev.to'
+      },
+      {
+        id: 'verge_2',
+        source: 'The Verge',
+        sourceClass: 'verge',
+        title: 'Open-weights AI models challenge proprietary benchmarks in real tests',
+        url: 'https://theverge.com/ai',
+        image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&auto=format&fit=crop&q=80',
+        score: '⚡ AI',
+        by: 'The Verge',
+        comments: 64,
+        domain: 'theverge.com'
+      },
+      {
+        id: 'android_2',
+        source: 'Android',
+        sourceClass: 'android',
+        title: 'Jetpack Compose performance optimizations for 120Hz micro-interactions',
+        url: 'https://android-developers.googleblog.com',
+        image: 'https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?w=400&auto=format&fit=crop&q=80',
+        score: '⚡ Kotlin',
+        by: 'Android Team',
+        comments: 28,
+        domain: 'googleblog.com'
+      }
     ];
 
     async function loadTechNews() {
       const listEl = document.getElementById('newsList');
-      const cache = localStorage.getItem('cukup_news_multi_cache_v2');
+      const cache = localStorage.getItem('cukup_news_cards_v3');
       if (cache) {
         try {
           const parsed = jsonParseSafe(cache);
           if (parsed && Array.isArray(parsed) && parsed.length > 0) {
             cachedAllNews = parsed;
-            renderFilteredNews();
+            renderNewsList();
           }
         } catch (e) {}
       } else {
         cachedAllNews = FALLBACK_NEWS;
-        renderFilteredNews();
+        renderNewsList();
       }
 
       try {
@@ -3170,6 +3293,7 @@ function generateNewTabHtml(palette, variantKey) {
               sourceClass: 'hn',
               title: it.title,
               url: it.url || ('https://news.ycombinator.com/item?id=' + it.id),
+              image: getTechCoverImage(it.title, domain),
               score: '▲ ' + (it.score || 0),
               by: it.by || 'anon',
               comments: it.descendants || 0,
@@ -3186,6 +3310,7 @@ function generateNewTabHtml(palette, variantKey) {
             sourceClass: 'dev',
             title: it.title,
             url: it.url,
+            image: it.cover_image || it.social_image || getTechCoverImage(it.title, 'dev.to'),
             score: '❤️ ' + (it.positive_reactions_count || 0),
             by: (it.user && it.user.name) || 'dev.to',
             comments: it.comments_count || 0,
@@ -3195,32 +3320,41 @@ function generateNewTabHtml(palette, variantKey) {
 
         let vergeStories = [];
         if (vergeRes.status === 'fulfilled' && vergeRes.value && Array.isArray(vergeRes.value.items)) {
-          vergeStories = vergeRes.value.items.slice(0, 5).map(it => ({
-            id: 'verge_' + Math.random().toString(36).slice(2, 7),
-            source: 'The Verge',
-            sourceClass: 'verge',
-            title: it.title,
-            url: it.link,
-            score: '⚡ Tech',
-            by: it.author || 'The Verge',
-            comments: 'Read',
-            domain: 'theverge.com'
-          }));
+          vergeStories = vergeRes.value.items.slice(0, 5).map(it => {
+            const imgMatch = (it.content || it.description || '').match(/src=["'](https?:\/\/[^"']+\.(?:jpg|png|webp|jpeg)[^"']*)["']/i);
+            return {
+              id: 'verge_' + Math.random().toString(36).slice(2, 7),
+              source: 'The Verge',
+              sourceClass: 'verge',
+              title: it.title,
+              url: it.link,
+              image: it.thumbnail || (imgMatch ? imgMatch[1] : null) || 'https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/268829_The90_Gem_SVasani_0002.jpg',
+              score: '⚡ Tech',
+              by: it.author || 'The Verge',
+              comments: 'Read',
+              domain: 'theverge.com'
+            };
+          });
         }
 
         let androidStories = [];
         if (androidRes.status === 'fulfilled' && androidRes.value && Array.isArray(androidRes.value.items)) {
-          androidStories = androidRes.value.items.slice(0, 5).map(it => ({
-            id: 'android_' + Math.random().toString(36).slice(2, 7),
-            source: 'Android',
-            sourceClass: 'android',
-            title: it.title,
-            url: it.link,
-            score: '⚡ Android',
-            by: it.author || 'Android Police',
-            comments: 'Read',
-            domain: 'androidpolice.com'
-          }));
+          androidStories = androidRes.value.items.slice(0, 5).map(it => {
+            const imgMatch = (it.content || it.description || '').match(/src=["'](https?:\/\/[^"']+\.(?:jpg|png|webp|jpeg)[^"']*)["']/i);
+            const enc = (it.enclosure && it.enclosure.link) ? it.enclosure.link : null;
+            return {
+              id: 'android_' + Math.random().toString(36).slice(2, 7),
+              source: 'Android',
+              sourceClass: 'android',
+              title: it.title,
+              url: it.link,
+              image: enc || it.thumbnail || (imgMatch ? imgMatch[1] : null) || 'https://static0.anpoimages.com/wordpress/wp-content/uploads/wm/2026/11/nothing-phone-color-black-on-top-of-wooden-table.jpeg',
+              score: '⚡ Android',
+              by: it.author || 'Android Police',
+              comments: 'Read',
+              domain: 'androidpolice.com'
+            };
+          });
         }
 
         const combined = [];
@@ -3234,23 +3368,20 @@ function generateNewTabHtml(palette, variantKey) {
 
         if (combined.length > 0) {
           cachedAllNews = combined;
-          localStorage.setItem('cukup_news_multi_cache_v2', JSON.stringify(combined));
-          renderFilteredNews();
+          localStorage.setItem('cukup_news_cards_v3', JSON.stringify(combined));
+          renderNewsList();
         }
       } catch (err) {
         console.warn('Multi news fetch warning (using cache):', err);
       }
     }
 
-    function renderFilteredNews() {
+    function renderNewsList() {
       const listEl = document.getElementById('newsList');
+      if (!listEl) return;
       listEl.innerHTML = '';
 
-      const items = currentNewsSource === 'all'
-        ? cachedAllNews
-        : cachedAllNews.filter(it => (it.sourceClass === currentNewsSource) || (it.source.toLowerCase().includes(currentNewsSource)));
-
-      items.forEach(item => {
+      cachedAllNews.forEach(item => {
         const a = document.createElement('a');
         a.className = 'news-item';
         a.href = item.url;
@@ -3258,18 +3389,20 @@ function generateNewTabHtml(palette, variantKey) {
         a.rel = 'noreferrer';
 
         const tagClass = item.sourceClass ? 'news-source-tag ' + item.sourceClass : 'news-source-tag';
+        const fallbackImg = 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&auto=format&fit=crop&q=80';
+        const imgSrc = item.image || fallbackImg;
 
         a.innerHTML = \`
-          <div class="news-badge-col mono">
+          <div class="news-thumb-box">
+            <img class="news-thumb-img" src="\${imgSrc}" alt="" loading="lazy" onerror="this.onerror=null; this.src='\${fallbackImg}';">
             <span class="\${tagClass}">\${item.source}</span>
-            <span class="news-score">\${item.score}</span>
           </div>
           <div class="news-content">
             <div class="news-headline">\${item.title}</div>
             <div class="news-meta mono">
               <span>\${item.domain}</span>
               <span>·</span>
-              <span>💬 \${item.comments}</span>
+              <span class="news-score-badge">\${item.score}</span>
               <span>·</span>
               <span>by \${item.by}</span>
             </div>
@@ -3278,15 +3411,6 @@ function generateNewTabHtml(palette, variantKey) {
         listEl.appendChild(a);
       });
     }
-
-    document.getElementById('newsSourceTabs').addEventListener('click', (e) => {
-      const btn = e.target.closest('.news-tab-btn');
-      if (!btn) return;
-      document.querySelectorAll('.news-tab-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentNewsSource = btn.dataset.source;
-      renderFilteredNews();
-    });
 
     // 7. YouTube Developer Watchlist Manager (Customizable from Settings)
     function getCustomYtVideos() {
