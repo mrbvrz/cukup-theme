@@ -15,10 +15,79 @@
  * =============================================================================
  */
 
+const fs = require('fs');
+const path = require('path');
+const os = require('os');
+
+function getDomainHelper(url) {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch (e) {
+    return (url.split('://')[1] || url).split('/')[0];
+  }
+}
+
+function readHeliumBookmarksOnDisk() {
+  const home = os.homedir();
+  const candidates = [
+    path.join(home, 'Library/Application Support/net.imput.helium/Default/Bookmarks'),
+    path.join(home, '.config/net.imput.helium/Default/Bookmarks'),
+    path.join(home, 'Library/Application Support/Google/Chrome/Default/Bookmarks'),
+    path.join(home, '.config/google-chrome/Default/Bookmarks')
+  ];
+
+  for (const p of candidates) {
+    if (fs.existsSync(p)) {
+      try {
+        const raw = fs.readFileSync(p, 'utf8');
+        const data = JSON.parse(raw);
+        const barNode = (data.roots && data.roots.bookmark_bar) || data;
+        if (!barNode) continue;
+
+        const items = [];
+        const folders = new Set();
+
+        function scan(node, currentFolder) {
+          if (!node) return;
+          const nodeTitle = node.name || node.title || '';
+          if (node.type === 'url' || node.url) {
+            const url = node.url || '';
+            if (url && !url.startsWith('chrome://') && !url.startsWith('helium://') && !url.startsWith('javascript:')) {
+              items.push({
+                id: 'bb_' + (node.id || Math.random().toString(36).substr(2, 9)),
+                title: nodeTitle || getDomainHelper(url),
+                url: url,
+                category: currentFolder ? currentFolder.toLowerCase() : 'all',
+                folder: currentFolder || '',
+                hint: getDomainHelper(url)
+              });
+            }
+          } else if (node.children && Array.isArray(node.children)) {
+            const folderTitle = (node.id === '1' || node === barNode) ? '' : nodeTitle;
+            if (folderTitle) {
+              folders.add(folderTitle);
+            }
+            for (const child of node.children) {
+              scan(child, folderTitle || currentFolder);
+            }
+          }
+        }
+
+        scan(barNode, '');
+        return { items, folders: Array.from(folders) };
+      } catch (err) {
+        // ignore
+      }
+    }
+  }
+  return { items: [], folders: [] };
+}
+
 function generateNewTabHtml(palette, variantKey) {
   const p = palette;
   const s = p.surface;
   const t = p.text;
+  const systemBookmarks = readHeliumBookmarksOnDisk();
 
   function hexToRgb(h) {
     if (!h) return '20, 17, 15';
@@ -2154,11 +2223,27 @@ function generateNewTabHtml(palette, variantKey) {
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
           <span>Maintenance & Storage Cache</span>
         </div>
-        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
-          <span style="font-size: 0.74rem; color: var(--text-muted);">Clear cached bookmarks, feeds, avatars, and force fresh browser sync</span>
-          <button type="button" class="reset-yt-btn" id="clearAllCacheBtn" style="color: #ef4444; border-color: rgba(239,68,68,0.25);">
-            <span>Clear Cache & Reload</span>
-          </button>
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+            <div>
+              <div style="font-size: 0.8rem; font-weight: 500; color: var(--text-primary);">Sync Browser Bookmarks</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted);">Sync directly from your Helium Bookmarks file</div>
+            </div>
+            <label class="reset-yt-btn" style="cursor: pointer; display: inline-flex; align-items: center; gap: 6px; margin: 0;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              <span>Sync Bookmarks File</span>
+              <input type="file" id="bookmarksFileInput" accept=".json,application/json,*" style="display: none;">
+            </label>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; border-top: 1px solid var(--accent-border); padding-top: 12px;">
+            <div>
+              <div style="font-size: 0.8rem; font-weight: 500; color: var(--text-primary);">Reset Storage & Cache</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted);">Purge cached feeds and force re-sync</div>
+            </div>
+            <button type="button" class="reset-yt-btn" id="clearAllCacheBtn" style="color: #ef4444; border-color: rgba(239,68,68,0.25);">
+              <span>Clear Cache & Reload</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -2170,8 +2255,8 @@ function generateNewTabHtml(palette, variantKey) {
   </div>
 
   <script>
-    // Automatic Cache Cleaner & Reset (Version v6_browser_only)
-    const CACHE_VERSION = 'v6_browser_only';
+    // Automatic Cache Cleaner & Reset (Version v7_helium_embedded)
+    const CACHE_VERSION = 'v7_helium_embedded';
     if (localStorage.getItem('cukup_cache_version') !== CACHE_VERSION) {
       const savedWp = localStorage.getItem('cukup_wallpaper');
       const savedRadius = localStorage.getItem('cukup_card_radius');
@@ -2638,28 +2723,34 @@ function generateNewTabHtml(palette, variantKey) {
     }
 
     // Browser Bookmarks Bar Integration (Direct from Browser)
-    let bookmarkBarItems = [];
-    let bookmarkBarFolders = [];
+    const INITIAL_BROWSER_BOOKMARKS = ${JSON.stringify(systemBookmarks)};
+    let bookmarkBarItems = (INITIAL_BROWSER_BOOKMARKS && Array.isArray(INITIAL_BROWSER_BOOKMARKS.items)) ? [...INITIAL_BROWSER_BOOKMARKS.items] : [];
+    let bookmarkBarFolders = (INITIAL_BROWSER_BOOKMARKS && Array.isArray(INITIAL_BROWSER_BOOKMARKS.folders)) ? [...INITIAL_BROWSER_BOOKMARKS.folders] : [];
 
     function extractBookmarkBarItems(barNode) {
+      if (!barNode) return { items: [], folders: [] };
+      if (barNode.roots && barNode.roots.bookmark_bar) {
+        barNode = barNode.roots.bookmark_bar;
+      }
       const items = [];
       const folders = new Set();
 
       function scan(node, currentFolder) {
         if (!node) return;
         const nodeTitle = node.title || node.name || '';
-        if (node.url) {
-          if (!node.url.startsWith('chrome://') && !node.url.startsWith('helium://') && !node.url.startsWith('javascript:')) {
+        if (node.type === 'url' || node.url) {
+          const url = node.url || '';
+          if (url && !url.startsWith('chrome://') && !url.startsWith('helium://') && !url.startsWith('javascript:')) {
             items.push({
-              id: 'bb_' + node.id,
-              title: nodeTitle || extractDomain(node.url),
-              url: node.url,
+              id: 'bb_' + (node.id || Math.random().toString(36).substr(2, 9)),
+              title: nodeTitle || extractDomain(url),
+              url: url,
               category: currentFolder ? currentFolder.toLowerCase() : 'all',
               folder: currentFolder || '',
-              hint: extractDomain(node.url)
+              hint: extractDomain(url)
             });
           }
-        } else if (node.children) {
+        } else if (node.children && Array.isArray(node.children)) {
           const folderTitle = (node.id === '1' || node === barNode) ? '' : nodeTitle;
           if (folderTitle) {
             folders.add(folderTitle);
@@ -2679,12 +2770,18 @@ function generateNewTabHtml(palette, variantKey) {
       if (cached) {
         try {
           const parsed = jsonParseSafe(cached);
-          if (parsed && Array.isArray(parsed.items)) {
+          if (parsed && Array.isArray(parsed.items) && parsed.items.length > 0) {
             bookmarkBarItems = parsed.items;
             if (Array.isArray(parsed.folders)) bookmarkBarFolders = parsed.folders;
             updateBookmarkCategoryTabs();
+            return;
           }
         } catch (e) {}
+      }
+      if (INITIAL_BROWSER_BOOKMARKS && Array.isArray(INITIAL_BROWSER_BOOKMARKS.items) && INITIAL_BROWSER_BOOKMARKS.items.length > 0) {
+        bookmarkBarItems = [...INITIAL_BROWSER_BOOKMARKS.items];
+        bookmarkBarFolders = [...(INITIAL_BROWSER_BOOKMARKS.folders || [])];
+        updateBookmarkCategoryTabs();
       }
     }
 
@@ -2700,12 +2797,14 @@ function generateNewTabHtml(palette, variantKey) {
             if (!barNode) return;
 
             const res = extractBookmarkBarItems(barNode);
-            bookmarkBarItems = res.items;
-            bookmarkBarFolders = res.folders;
+            if (res.items && res.items.length > 0) {
+              bookmarkBarItems = res.items;
+              bookmarkBarFolders = res.folders;
 
-            localStorage.setItem('cukup_bookmark_bar_cache', JSON.stringify({ items: bookmarkBarItems, folders: bookmarkBarFolders }));
-            updateBookmarkCategoryTabs();
-            renderBookmarks();
+              localStorage.setItem('cukup_bookmark_bar_cache', JSON.stringify({ items: bookmarkBarItems, folders: bookmarkBarFolders }));
+              updateBookmarkCategoryTabs();
+              renderBookmarks();
+            }
           });
         } catch (err) {
           console.warn('Could not read Bookmarks Bar:', err);
@@ -2737,6 +2836,11 @@ function generateNewTabHtml(palette, variantKey) {
             return bookmarkBarItems;
           }
         } catch (e) {}
+      }
+      if (INITIAL_BROWSER_BOOKMARKS && Array.isArray(INITIAL_BROWSER_BOOKMARKS.items) && INITIAL_BROWSER_BOOKMARKS.items.length > 0) {
+        bookmarkBarItems = [...INITIAL_BROWSER_BOOKMARKS.items];
+        bookmarkBarFolders = [...(INITIAL_BROWSER_BOOKMARKS.folders || [])];
+        return bookmarkBarItems;
       }
       return [];
     }
@@ -3458,6 +3562,35 @@ function generateNewTabHtml(palette, variantKey) {
 
         localStorage.setItem('cukup_cache_version', CACHE_VERSION);
         location.reload();
+      });
+    }
+
+    const bookmarksFileInput = document.getElementById('bookmarksFileInput');
+    if (bookmarksFileInput) {
+      bookmarksFileInput.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          try {
+            const data = JSON.parse(evt.target.result);
+            const res = extractBookmarkBarItems(data);
+            if (res.items && res.items.length > 0) {
+              bookmarkBarItems = res.items;
+              bookmarkBarFolders = res.folders;
+              localStorage.setItem('cukup_bookmark_bar_cache', JSON.stringify({ items: bookmarkBarItems, folders: bookmarkBarFolders }));
+              activeCategory = 'all';
+              updateBookmarkCategoryTabs();
+              renderBookmarks();
+              alert('Successfully synced ' + res.items.length + ' bookmark(s) from ' + file.name + '!');
+            } else {
+              alert('No valid bookmarks found on the Bookmarks Bar in this file.');
+            }
+          } catch (err) {
+            alert('Failed to parse Bookmarks file: ' + err.message);
+          }
+        };
+        reader.readAsText(file);
       });
     }
 
