@@ -18,6 +18,7 @@
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const { execSync } = require('child_process');
 
 function getDomainHelper(url) {
   try {
@@ -36,6 +37,38 @@ function readHeliumBookmarksOnDisk() {
     path.join(home, '.config/google-chrome/Default/Bookmarks')
   ];
 
+  const favCandidates = [
+    path.join(home, 'Library/Application Support/net.imput.helium/Default/Favicons'),
+    path.join(home, '.config/net.imput.helium/Default/Favicons'),
+    path.join(home, 'Library/Application Support/Google/Chrome/Default/Favicons'),
+    path.join(home, '.config/google-chrome/Default/Favicons')
+  ];
+
+  let favDbCopy = null;
+  for (const fp of favCandidates) {
+    if (fs.existsSync(fp)) {
+      try {
+        favDbCopy = path.join(os.tmpdir(), 'cukup_helium_favs.db');
+        fs.copyFileSync(fp, favDbCopy);
+        break;
+      } catch (e) {}
+    }
+  }
+
+  function getCachedFavicon(url) {
+    if (!favDbCopy || !fs.existsSync(favDbCopy)) return null;
+    try {
+      const domain = new URL(url).hostname.replace(/^www\./, '');
+      const cleanDomain = domain.replace(/'/g, "''");
+      const sql = `SELECT hex(fb.image_data) FROM icon_mapping im JOIN favicon_bitmaps fb ON im.icon_id = fb.icon_id WHERE im.page_url LIKE '%${cleanDomain}%' ORDER BY fb.width DESC LIMIT 1;`;
+      const hex = execSync(`sqlite3 "${favDbCopy}" "${sql}"`, { encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'] }).trim();
+      if (hex && hex.length > 50) {
+        return 'data:image/png;base64,' + Buffer.from(hex, 'hex').toString('base64');
+      }
+    } catch (e) {}
+    return null;
+  }
+
   for (const p of candidates) {
     if (fs.existsSync(p)) {
       try {
@@ -53,10 +86,12 @@ function readHeliumBookmarksOnDisk() {
           if (node.type === 'url' || node.url) {
             const url = node.url || '';
             if (url && !url.startsWith('chrome://') && !url.startsWith('helium://') && !url.startsWith('javascript:')) {
+              const fav = getCachedFavicon(url);
               items.push({
                 id: 'bb_' + (node.id || Math.random().toString(36).substr(2, 9)),
                 title: nodeTitle || getDomainHelper(url),
                 url: url,
+                favicon: fav || '',
                 category: currentFolder ? currentFolder.toLowerCase() : 'all',
                 folder: currentFolder || '',
                 hint: getDomainHelper(url)
@@ -2255,8 +2290,8 @@ function generateNewTabHtml(palette, variantKey) {
   </div>
 
   <script>
-    // Automatic Cache Cleaner & Reset (Version v7_helium_embedded)
-    const CACHE_VERSION = 'v7_helium_embedded';
+    // Automatic Cache Cleaner & Reset (Version v8_real_favicons)
+    const CACHE_VERSION = 'v8_real_favicons';
     if (localStorage.getItem('cukup_cache_version') !== CACHE_VERSION) {
       const savedWp = localStorage.getItem('cukup_wallpaper');
       const savedRadius = localStorage.getItem('cukup_card_radius');
@@ -2654,13 +2689,25 @@ function generateNewTabHtml(palette, variantKey) {
       }
       iconBox.appendChild(fallbackHolder);
 
-      // Multi-tier favicon sources
+      // Multi-tier favicon sources prioritized by original website favicon
       const sources = [];
+      if (bm.favicon) {
+        sources.push(bm.favicon);
+      }
+      try {
+        const u = new URL(bm.url);
+        sources.push(u.origin + '/favicon.ico');
+        if (domainHint) {
+          sources.push('https://' + domainHint + '/favicon.ico');
+        }
+      } catch (e) {}
+
       if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.id) {
         sources.push('chrome-extension://' + chrome.runtime.id + '/_favicon/?pageUrl=' + encodeURIComponent(bm.url) + '&size=64');
       }
       sources.push('https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=' + encodeURIComponent(bm.url) + '&size=64');
       if (domainHint) {
+        sources.push('https://www.google.com/s2/favicons?domain=' + encodeURIComponent(domainHint) + '&sz=64');
         sources.push('https://icons.duckduckgo.com/ip3/' + domainHint + '.ico');
       }
 
