@@ -3318,17 +3318,25 @@ function generateNewTabHtml(palette, variantKey) {
           }));
         }
 
+        function extractRssImage(it) {
+          if (!it) return null;
+          if (it.thumbnail && typeof it.thumbnail === 'string') return it.thumbnail;
+          if (it.enclosure && it.enclosure.link) return it.enclosure.link;
+          const raw = (it.content || it.description || '');
+          const m = raw.match(/<img[^>]+src=["']([^"']+)["']/i);
+          return (m && m[1]) ? m[1] : null;
+        }
+
         let vergeStories = [];
         if (vergeRes.status === 'fulfilled' && vergeRes.value && Array.isArray(vergeRes.value.items)) {
           vergeStories = vergeRes.value.items.slice(0, 5).map(it => {
-            const imgMatch = (it.content || it.description || '').match(/src=["'](https?:\/\/[^"']+\.(?:jpg|png|webp|jpeg)[^"']*)["']/i);
             return {
               id: 'verge_' + Math.random().toString(36).slice(2, 7),
               source: 'The Verge',
               sourceClass: 'verge',
               title: it.title,
               url: it.link,
-              image: it.thumbnail || (imgMatch ? imgMatch[1] : null) || 'https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/268829_The90_Gem_SVasani_0002.jpg',
+              image: extractRssImage(it) || 'https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/268829_The90_Gem_SVasani_0002.jpg',
               score: '⚡ Tech',
               by: it.author || 'The Verge',
               comments: 'Read',
@@ -3340,15 +3348,13 @@ function generateNewTabHtml(palette, variantKey) {
         let androidStories = [];
         if (androidRes.status === 'fulfilled' && androidRes.value && Array.isArray(androidRes.value.items)) {
           androidStories = androidRes.value.items.slice(0, 5).map(it => {
-            const imgMatch = (it.content || it.description || '').match(/src=["'](https?:\/\/[^"']+\.(?:jpg|png|webp|jpeg)[^"']*)["']/i);
-            const enc = (it.enclosure && it.enclosure.link) ? it.enclosure.link : null;
             return {
               id: 'android_' + Math.random().toString(36).slice(2, 7),
               source: 'Android',
               sourceClass: 'android',
               title: it.title,
               url: it.link,
-              image: enc || it.thumbnail || (imgMatch ? imgMatch[1] : null) || 'https://static0.anpoimages.com/wordpress/wp-content/uploads/wm/2026/11/nothing-phone-color-black-on-top-of-wooden-table.jpeg',
+              image: extractRssImage(it) || 'https://static0.anpoimages.com/wordpress/wp-content/uploads/wm/2026/11/nothing-phone-color-black-on-top-of-wooden-table.jpeg',
               score: '⚡ Android',
               by: it.author || 'Android Police',
               comments: 'Read',
