@@ -21,13 +21,20 @@
   },
   "keywords": [
     "theme",
+    "colorscheme",
+    "color-scheme",
+    "dark-theme",
+    "syntax-highlighting",
+    "design-system",
+    "design-tokens",
     "alacritty",
     "zed",
     "vscode",
+    "kitty",
+    "zellij",
     "iterm2",
-    "design-system",
-    "minimalist",
-    "dark-theme"
+    "tailwind",
+    "minimalist"
   ],
   "author": "Hasan Suryaman",
   "license": "MIT"
